@@ -1,0 +1,10 @@
+{
+  "name": "pouchdb-calendar",
+  "dependencies": {
+    "pouchdb-nightly.min.js": "http://download.pouchdb.com/pouchdb-nightly.min.js",
+    "coffee-script.js": "http://jashkenas.github.io/coffee-script/extras/coffee-script.js",
+    "fullcalendar": "~1.6.4",
+    "timezone-js": "~0.4.6",
+    "tzdata2013g.tar.gz": "http://www.iana.org/time-zones/repository/releases/tzdata2013g.tar.gz"
+  }
+}

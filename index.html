@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<!-- jQuery -->
+<script type="text/javascript" src="./bower_components/jquery/jquery.min.js"></script>
+
+<!-- FullCalendar -->
+<link rel="stylesheet" type="text/css" href="./bower_components/fullcalendar/fullcalendar.css">
+<link rel="stylesheet" type="text/css" href="./bower_components/fullcalendar/fullcalendar.print.css" media="print">
+<script type="text/javascript" src="./bower_components/fullcalendar/fullcalendar.min.js"></script>
+
+<!-- jQuery mobile on CDN -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+
+<!-- PouchDB -->
+<script type="text/javascript" src="./bower_components/pouchdb-nightly.min.js/index.js"></script>
+
+<!-- TimezoneJS -->
+<script type="text/javascript" src="./bower_components/timezone-js/src/date.js"></script>
+
+<!-- Local -->
+<script type="text/javascript" src="./bower_components/coffee-script.js/index.js"></script>
+<script type="text/coffeescript" src="./main.coffee.md"></script>
+</head>
+<body>
+<div id='loading' style='display:none'>loading...</div>
+<div id='calendar'></div>
+<div id='new-event'>
+    <form>
+       <input name="start">
+       <input name="end">
+       <input name="title">
+    </form>
+</div>
+</body>
+</html>

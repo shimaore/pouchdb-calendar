@@ -26,6 +26,12 @@ $ = jQuery = require 'jquery-browserify'
 moonshine = require 'moonshine-browserify'
 pouchdb = require './pouchdb-nightly'
 
+jquery_ui_core = require '../bower_components/jquery-ui/ui/jquery.ui.core.js'
+jquery_ui_widget = require '../bower_components/jquery-ui/ui/jquery.ui.widget.js'
+jquery_ui_mouse = require '../bower_components/jquery-ui/ui/jquery.ui.mouse.js'
+jquery_ui_draggable = require '../bower_components/jquery-ui/ui/jquery.ui.draggable.js'
+jquery_ui_resizable = require '../bower_components/jquery-ui/ui/jquery.ui.resizable.js'
+
 fullcalendar = require '../bower_components/fullcalendar/fullcalendar.js'
 
 second = 1000
@@ -69,42 +75,50 @@ $(document).ready -> moonshine ->
       start: new timezoneJS.Date('2013-10-01T09:50').toISOString()
       end: new timezoneJS.Date('2013-10-01T10:50').toISOString()
       title: 'Blob adop'
+      allDay: false
     p._rev = doc._rev if doc?
     db.put p
 
-  $('#calendar').fullCalendar
-    editable: true
-    startEditable: true
-    durationEditable: true
-    lazyFetching: true
-    ignoreTimezone: false
-
-    events: (start,end,next) ->
-      query =
-        startkey: new timezoneJS.Date(start).valueOf()-week
-        endkey: new timezoneJS.Date(end).valueOf()+week
-        include_docs: true
-      console.log query
-      db.query 'calendar/locate', query, (err,response) ->
-        if err
-          console.error err
-          return
-        logger JSON.stringify response
-        # FIXME remove duplicate _ids
-        uniq = {}
-        for row in response.rows
-          uniq[row.id] ?= row.doc
-        next (v for k,v of uniq)
+  load_events = (start,end,next) ->
+    query =
+      startkey: new timezoneJS.Date(start).valueOf()-week
+      endkey: new timezoneJS.Date(end).valueOf()+week
+      include_docs: true
+    console.log query
+    db.query 'calendar/locate', query, (err,response) ->
+      if err
+        console.error err
         return
 
-    eventDrop: (event,delta) ->
-      alert event.title + 'was moved ' + delta + 'days'
+      # remove duplicate _ids
+      uniq = {}
+      for row in response.rows
+        uniq[row.id] ?= row.doc
+      next (v for k,v of uniq)
+      return
 
-    loading: (isLoading) ->
-      if isLoading
-        ($ '#loading').show()
-      else
-        ($ '#loading').hide()
+  drop_event = (event,delta) ->
+    console.log event
+    console.log event.title + ' was moved ' + delta + 'days'
+
+  show_loading = (isLoading) ->
+    if isLoading
+      ($ '#loading').show()
+    else
+      ($ '#loading').hide()
 
   @get '': ->
-    console.log 'Started'
+    $('#calendar').fullCalendar
+      editable: true
+      startEditable: true
+      durationEditable: true
+      lazyFetching: true
+      ignoreTimezone: false
+
+      timeFormat: 'H(:mm)'
+
+      events: load_events
+      eventDrop: drop_event
+      loading: show_loading
+
+   console.log 'Started'

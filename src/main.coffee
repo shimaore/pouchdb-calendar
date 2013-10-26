@@ -4,6 +4,7 @@ db_url = "calendar"
 
 {logger} = require './tools.coffee'
 
+# TODO try with moment.timezone instead?
 timezoneJS = require 'timezone-js'
 zone_files = require './timezones.coffee'
 
@@ -32,12 +33,13 @@ jquery_ui_mouse = require '../bower_components/jquery-ui/ui/jquery.ui.mouse.js'
 jquery_ui_draggable = require '../bower_components/jquery-ui/ui/jquery.ui.draggable.js'
 jquery_ui_resizable = require '../bower_components/jquery-ui/ui/jquery.ui.resizable.js'
 
-fullcalendar = require '../bower_components/fullcalendar/fullcalendar.js'
+# moment = require '../bower_components/momentjs/moment.js'
+moment = require 'moment'
+# moment_format = 'YYYY-MM-DDTHH:mm:ssZ'
+#
+# Data inside the PouchDB records is stored as moment().format() data (i.e. ISO8601 with timezone).
 
-second = 1000
-hour = 3600*second
-day = 24*hour
-week = 7*day
+fullcalendar = require '../bower_components/fullcalendar/fullcalendar.js'
 
 make_fun = (f) -> "(#{f})"
 
@@ -49,40 +51,44 @@ $(document).ready -> moonshine ->
   # for any event that might span that week.
   # This way when looking-up records we don't have to span the entire
   # database.
-  # FIXME? This might be easier to do with geo tools.
+  # FIXME? This might be easier to do with spatial indexing?
   db.get '_design/calendar', (err,doc) ->
     p =
       _id: '_design/calendar'
       language: 'javascript'
       views:
+        # This view uses a generic 'toJSON' (no timezone) format.
         locate:
           map: make_fun (doc) ->
+            return unless doc.type? and doc.type is 'event'
             return unless doc.start? and doc.end?
-            week = 7*24*3600*1000
-            start = new Date(doc.start).valueOf()
-            end = new Date(doc.end).valueOf()
+            start = new Date doc.start
+            end = new Date doc.end
             while start < end
-              emit start, null
-              start += week
-            emit end, null
+              emit start.toJSON(), null
+              start = new Date start.valueOf()+7*24*3600*1000
+            emit end.toJSON(), null
+
     p._rev = doc._rev if doc?
     db.put p
 
+  ###
   db.get 'blob', (err,doc) ->
     p =
       _id: 'blob'
       id: 'blob' # parent id for fullCalendar
-      start: new timezoneJS.Date('2013-10-01T09:50').toISOString()
-      end: new timezoneJS.Date('2013-10-01T10:50').toISOString()
+      start: moment('2013-10-01T09:50-02:00').format()
+      end: moment('2013-10-01T10:50-02:00').format()
       title: 'Blob adop'
       allDay: false
     p._rev = doc._rev if doc?
     db.put p
+  ###
 
   load_events = (start,end,next) ->
     query =
-      startkey: new timezoneJS.Date(start).valueOf()-week
-      endkey: new timezoneJS.Date(end).valueOf()+week
+      startkey: moment(start).add(-1,'week').toJSON()
+      endkey: moment(end).add(1,'week').toJSON()
       include_docs: true
     console.log query
     db.query 'calendar/locate', query, (err,response) ->
@@ -97,9 +103,80 @@ $(document).ready -> moonshine ->
       next (v for k,v of uniq)
       return
 
-  drop_event = (event,delta) ->
-    console.log event
-    console.log event.title + ' was moved ' + delta + 'days'
+  delta_save = (event,next) ->
+    db.get event._id, (err,doc) ->
+      if err
+        console.error err
+        return next false
+
+      doc.start = moment(event.start).format()
+      doc.end = moment(event.end).format()
+      doc.allDay = event.allDay
+
+      db.put doc, (err,doc) ->
+        if err or not doc.ok
+          next false
+        else
+          next true
+
+  field_save = (field,event,next) ->
+    db.get event._id, (err,doc) ->
+      if err
+        console.error err
+        return next false
+
+      doc[field] = event[field]
+
+      db.put doc, (err,doc) ->
+        if err or not doc.ok
+          next false
+        else
+          next true
+
+  remove_event = (event,next) ->
+    event._deleted = true
+    field_save '_deleted', event, next
+
+  drop_event = (event,dayDelta,minuteDelta,allDay,revert) ->
+    delta_save event, (ok) ->
+      if not ok then revert()
+
+  resize_event = (event, dayDelta, minuteDelta, revert) ->
+    delta_save event, (ok) ->
+      if not ok then revert()
+
+  calendar = -> ($ '#calendar').fullCalendar arguments...
+
+  event_click = (event) ->
+    $(this).html '<input />'
+    $(this).find('input').val(event.title).focus().blur ->
+      title = $(this).val().trim()
+      if title is ''
+        remove_event event, (ok) ->
+          if ok then calendar 'removeEvents', (e) ->
+            return e._id is event._id
+      else
+        event.title = title
+        field_save 'title', event, (ok) ->
+          if ok then calendar 'updateEvent', event
+
+  select = (start,end,allDay) ->
+    doc =
+      type: 'event'
+      start: moment(start).format()
+      end: moment(end).format()
+      allDay: allDay
+      title: 'New Event'
+
+    db.post doc, (err,response) ->
+      if err or not response.ok
+        console.log err
+        calendar 'refetchEvents'
+        return
+      doc._id = response.id
+      doc._rev = response.rev
+      event = doc
+      calendar 'addEventSource', [event]
 
   show_loading = (isLoading) ->
     if isLoading
@@ -108,17 +185,29 @@ $(document).ready -> moonshine ->
       ($ '#loading').hide()
 
   @get '': ->
-    $('#calendar').fullCalendar
+
+    day_click = (date,allDay) =>
+      calendar 'changeView', 'agendaWeek'
+      calendar 'gotoDate', date
+
+    calendar
       editable: true
-      startEditable: true
-      durationEditable: true
+      selectable: true
+      selectHelper: true
+      eventStartEditable: true
+      eventDurationEditable: true
       lazyFetching: true
       ignoreTimezone: false
 
-      timeFormat: 'H(:mm)'
+      timeFormat: 'HH:mm'
+      axisFormat: 'HH:mm'
 
       events: load_events
       eventDrop: drop_event
+      eventResize: resize_event
       loading: show_loading
+      dayClick: day_click
+      eventClick: event_click
+      select: select
 
    console.log 'Started'

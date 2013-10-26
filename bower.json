@@ -3,7 +3,8 @@
   "dependencies": {
     "pouchdb-nightly.min.js": "http://download.pouchdb.com/pouchdb-nightly.min.js",
     "fullcalendar": "~1.6.4",
-    "tzdata2013g.tar.gz": "http://www.iana.org/time-zones/repository/releases/tzdata2013g.tar.gz"
+    "tzdata2013g.tar.gz": "http://www.iana.org/time-zones/repository/releases/tzdata2013g.tar.gz",
+    "momentjs": "~2.3.1"
   },
   "devDependencies": {
     "jquery-ui": "~1.10.3"

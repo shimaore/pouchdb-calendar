@@ -32,6 +32,7 @@
     "jquery-browserify": "~1.8.1",
     "moonshine-browserify": "~0.6.2",
     "moment": "~2.3.1",
-    "moment-timezone": "0.0.3"
+    "moment-timezone": "0.0.3",
+    "node-colorfactory": "~0.1.2"
   }
 }

@@ -10,6 +10,7 @@ The [online demo](http://shimaore.github.io/pouchdb-calendar/test/) maintains a 
 
 To add an event, click on a day, or select a time-span in the day or week view. Click on the new (empty) event to give it some content. Similarly, click on an existing event to modify its content. Use drag-and-drop to modify the start and end times of an event, or to to convert an event from full-day to time-based and conversely.
 To remove an event, click on the event and remove its content; the event will be deleted.
+Events classes are created by using the `#name` hash-tag syntax. Each event classes is mapped to attributes such as color.
 
 To replicate your local (in-browser) calendar database, first create the destination database on your CouchDB server, then enter its URL in the `Remote CouchDB` box at the bottom of the page. Two-way synchronization will start and will restart automatically when you access the page again.
 

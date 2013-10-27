@@ -8,6 +8,8 @@ db_url = "calendar"
 timezoneJS = require 'timezone-js'
 zone_files = require './timezones.coffee'
 
+{ColorFactory} = require 'node-colorfactory'
+
 do ->
   timezoneJS.timezone.zoneFileBasePath = 'tz'
   timezoneJS.timezone.transport = (opts) ->
@@ -147,10 +149,59 @@ $(document).ready -> moonshine ->
       if not ok then revert()
 
   # Apply CSS classes to an event, based on hash-tags in its title.
+
+  build_style = (name,v) ->
+    style = []
+    if v.bold
+      style.push "font-weight: bold;"
+    if v.color
+      style.push "color: #{v.color};"
+    if v.background
+      style.push "background-color: #{v.background};"
+    ($ "style#calendar-#{name}").remove()
+    ($ '<style>').
+      prop('id',"calendar-#{name}").
+      prop('type','text/css').
+      html(".calendar-#{name} { #{ style.join '' } }").
+      appendTo 'head'
+    console.log "Built style for #{name}"
+
+  preferences = {}
+  db.get 'preferences', (err,doc) ->
+    if doc?
+      preferences = doc
+    else
+      preferences =
+        _id: 'preferences'
+        classes: {}
+
+    if preferences.classes?
+      for k,v of preferences.classes
+        build_style k,v
+
+  save_preferences = (next) ->
+    db.get 'preferences', (err,doc) ->
+      preferences._rev = doc._rev if doc?._rev?
+      db.put preferences, (err) ->
+        if err?
+          logger err
+          return
+        next?()
+
+  new_class = (name) ->
+    return if preferences.classes[name]?
+    preferences.classes[name] =
+      background: ColorFactory.randomHue(45,42)
+    save_preferences ->
+      build_style name, preferences.classes[name]
+
   classes_for_event = (event) ->
     classes = event.title?.match /#\w+/g
     if classes?
-      event.className = classes.map (t) -> t.substr 1
+      event.className = classes.map (t) ->
+        name = t.substr 1
+        new_class name
+        "calendar-#{name}"
 
   calendar = -> ($ '#calendar').fullCalendar arguments...
 

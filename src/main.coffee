@@ -216,6 +216,15 @@ $(document).ready -> moonshine ->
       eventClick: event_click
       select: select
 
+    # Do not force a refresh on each event.
+    pending_refresh = null
+    refresh = ->
+      calendar 'refetchEvents'
+      pending_refresh = null
+
+    on_change = ->
+      pending_refresh ?= setTimeout refresh, 500
+
     start_replication = (url) ->
       if url isnt ''
         remotedb = new PouchDB url
@@ -227,6 +236,7 @@ $(document).ready -> moonshine ->
           continuous: true
           complete: (err) ->
             logger err
+          onChange: on_change
 
     db.get 'replicate', (err,doc) ->
       if doc?.url?

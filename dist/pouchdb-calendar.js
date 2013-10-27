@@ -24144,16 +24144,19 @@ $(document).ready(function() {
               if (!((doc.type != null) && doc.type === 'event')) {
                 return;
               }
-              if (!((doc.start != null) && (doc.end != null))) {
+              if (doc.start == null) {
                 return;
               }
               start = new Date(doc.start);
-              end = new Date(doc.end);
-              while (start < end) {
-                emit(start.toJSON(), null);
-                start = new Date(start.valueOf() + 7 * 24 * 3600 * 1000);
+              emit(start.toJSON(), null);
+              if (doc.end != null) {
+                end = new Date(doc.end);
+                while (start < end) {
+                  start = new Date(start.valueOf() + 7 * 24 * 3600 * 1000);
+                  emit(start.toJSON(), null);
+                }
+                return emit(end.toJSON(), null);
               }
-              return emit(end.toJSON(), null);
             })
           }
         }
@@ -24216,7 +24219,11 @@ $(document).ready(function() {
           return next(false);
         }
         doc.start = moment(event.start).format();
-        doc.end = moment(event.end).format();
+        if (event.end != null) {
+          doc.end = moment(event.end).format();
+        } else {
+          delete doc.end;
+        }
         doc.allDay = event.allDay;
         return db.put(doc, function(err, doc) {
           if (err || !doc.ok) {
@@ -24293,10 +24300,12 @@ $(document).ready(function() {
       doc = {
         type: 'event',
         start: moment(start).format(),
-        end: moment(end).format(),
         allDay: allDay,
-        title: 'New Event'
+        title: ' '
       };
+      if (end) {
+        doc.end = moment(end).format();
+      }
       return db.post(doc, function(err, response) {
         var event;
         if (err || !response.ok) {
@@ -24317,15 +24326,15 @@ $(document).ready(function() {
         return ($('#loading')).hide();
       }
     };
-    this.get({
+    return this.get({
       '': function() {
-        var day_click,
+        var day_click, start_replication,
           _this = this;
         day_click = function(date, allDay) {
           calendar('changeView', 'agendaWeek');
           return calendar('gotoDate', date);
         };
-        return calendar({
+        calendar({
           editable: true,
           selectable: true,
           selectHelper: true,
@@ -24343,9 +24352,50 @@ $(document).ready(function() {
           eventClick: event_click,
           select: select
         });
+        start_replication = function(url) {
+          var remotedb;
+          if (url !== '') {
+            remotedb = new PouchDB(url);
+            db.replicate.to(url, {
+              continuous: true,
+              complete: function(err) {
+                return logger(err);
+              }
+            });
+            return db.replicate.from(url, {
+              continuous: true,
+              complete: function(err) {
+                return logger(err);
+              }
+            });
+          }
+        };
+        db.get('replicate', function(err, doc) {
+          if ((doc != null ? doc.url : void 0) != null) {
+            ($('#replicate')).find('.url').val(doc.url);
+            return start_replication(doc.url);
+          }
+        });
+        ($('#replicate')).find('.url').change(function() {
+          var url;
+          url = $(this).val().trim();
+          return db.get('replicate', function(err, doc) {
+            if (doc != null) {
+              doc.url = url;
+              db.put(doc);
+            } else {
+              doc = {
+                _id: 'replicate',
+                url: url
+              };
+              db.put(doc);
+            }
+            return start_replication(url);
+          });
+        });
+        return console.log('Started');
       }
     });
-    return console.log('Started');
   });
 });
 

@@ -245,16 +245,13 @@ $(document).ready -> moonshine ->
 
     start_replication = (url) ->
       if url isnt ''
-        remotedb = new PouchDB url
-        db.replicate.to url,
-          continuous: true
-          complete: (err) ->
-            logger err
-        db.replicate.from url,
-          continuous: true
-          complete: (err) ->
-            logger err
-          onChange: on_change
+        do replicate_to = ->
+          db.replicate.to url, continuous: true, (err) ->
+            setTimeout replicate_to, 10000
+
+        do replicate_from = ->
+          db.replicate.from url, continuous: true, onChange: on_change, (err) ->
+            setTimeout replicate_from, 10000
 
     db.get 'replicate', (err,doc) ->
       if doc?.url?

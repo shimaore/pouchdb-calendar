@@ -24166,19 +24166,6 @@ $(document).ready(function() {
       }
       return db.put(p);
     });
-    /*
-    db.get 'blob', (err,doc) ->
-      p =
-        _id: 'blob'
-        id: 'blob' # parent id for fullCalendar
-        start: moment('2013-10-01T09:50-02:00').format()
-        end: moment('2013-10-01T10:50-02:00').format()
-        title: 'Blob adop'
-        allDay: false
-      p._rev = doc._rev if doc?
-      db.put p
-    */
-
     load_events = function(start, end, next) {
       var query;
       query = {

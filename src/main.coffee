@@ -130,7 +130,11 @@ $(document).ready -> moonshine ->
         logger err
         return next false
 
-      doc[field] = event[field]
+      if typeof field is 'string'
+        doc[field] = event[field]
+      else
+        for f in field
+          doc[f] = event[f]
 
       db.put doc, (err,doc) ->
         if err or not doc.ok

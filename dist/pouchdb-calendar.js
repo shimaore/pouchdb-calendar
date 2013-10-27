@@ -24328,7 +24328,7 @@ $(document).ready(function() {
     };
     return this.get({
       '': function() {
-        var day_click, start_replication,
+        var day_click, on_change, pending_refresh, refresh, start_replication,
           _this = this;
         day_click = function(date, allDay) {
           calendar('changeView', 'agendaWeek');
@@ -24352,6 +24352,14 @@ $(document).ready(function() {
           eventClick: event_click,
           select: select
         });
+        pending_refresh = null;
+        refresh = function() {
+          calendar('refetchEvents');
+          return pending_refresh = null;
+        };
+        on_change = function() {
+          return pending_refresh != null ? pending_refresh : pending_refresh = setTimeout(refresh, 500);
+        };
         start_replication = function(url) {
           var remotedb;
           if (url !== '') {
@@ -24366,7 +24374,8 @@ $(document).ready(function() {
               continuous: true,
               complete: function(err) {
                 return logger(err);
-              }
+              },
+              onChange: on_change
             });
           }
         };

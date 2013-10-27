@@ -61,13 +61,15 @@ $(document).ready -> moonshine ->
         locate:
           map: make_fun (doc) ->
             return unless doc.type? and doc.type is 'event'
-            return unless doc.start? and doc.end?
+            return unless doc.start?
             start = new Date doc.start
-            end = new Date doc.end
-            while start < end
-              emit start.toJSON(), null
-              start = new Date start.valueOf()+7*24*3600*1000
-            emit end.toJSON(), null
+            emit start.toJSON(), null
+            if doc.end?
+              end = new Date doc.end
+              while start < end
+                start = new Date start.valueOf()+7*24*3600*1000
+                emit start.toJSON(), null
+              emit end.toJSON(), null
 
     p._rev = doc._rev if doc?
     db.put p
@@ -110,7 +112,10 @@ $(document).ready -> moonshine ->
         return next false
 
       doc.start = moment(event.start).format()
-      doc.end = moment(event.end).format()
+      if event.end?
+        doc.end = moment(event.end).format()
+      else
+        delete doc.end
       doc.allDay = event.allDay
 
       db.put doc, (err,doc) ->
@@ -164,9 +169,10 @@ $(document).ready -> moonshine ->
     doc =
       type: 'event'
       start: moment(start).format()
-      end: moment(end).format()
       allDay: allDay
       title: 'New Event'
+
+    doc.end = moment(end).format() if end
 
     db.post doc, (err,response) ->
       if err or not response.ok

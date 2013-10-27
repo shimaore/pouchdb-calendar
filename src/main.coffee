@@ -101,6 +101,7 @@ $(document).ready -> moonshine ->
       # remove duplicate _ids
       uniq = {}
       for row in response.rows
+        classes_for_event row.doc
         uniq[row.id] ?= row.doc
       next (v for k,v of uniq)
       return
@@ -150,6 +151,11 @@ $(document).ready -> moonshine ->
     delta_save event, (ok) ->
       if not ok then revert()
 
+  classes_for_event = (event) ->
+    classes = event.title?.match /#\w+/g
+    if classes?
+      event.className = classes.map (t) -> t.substr 1
+
   calendar = -> ($ '#calendar').fullCalendar arguments...
 
   event_click = (event) ->
@@ -162,6 +168,7 @@ $(document).ready -> moonshine ->
             return e._id is event._id
       else
         event.title = title
+        classes_for_event event
         field_save 'title', event, (ok) ->
           if ok then calendar 'updateEvent', event
 

@@ -241,17 +241,26 @@ $(document).ready -> moonshine ->
       pending_refresh = null
 
     on_change = ->
+      replication_status 'Running'
       pending_refresh ?= setTimeout refresh, 500
+
+    replication_status = (t) ->
+      ($ '.replication-status').text t
 
     start_replication = (url) ->
       if url isnt ''
         do replicate_to = ->
           db.replicate.to url, continuous: true, (err) ->
+            replication_status 'Failed, retrying in 10s...'
             setTimeout replicate_to, 10000
 
         do replicate_from = ->
           db.replicate.from url, continuous: true, onChange: on_change, (err) ->
+            replication_status 'Failed, retrying in 10s...'
             setTimeout replicate_from, 10000
+
+        replication_status 'Started'
+
 
     db.get 'replicate', (err,doc) ->
       if doc?.url?

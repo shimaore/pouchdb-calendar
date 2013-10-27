@@ -16,6 +16,8 @@
     "url": "https://github.com/shimaore/pouchdb-calendar/issues"
   },
   "devDependencies": {
+    "grunt-cli": "~0.1.9",
+    "bower": "~1.2.7",
     "browserify": "~2.35.0",
     "grunt": "~0.4.1",
     "grunt-browserify": "~1.2.9",

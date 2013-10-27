@@ -170,7 +170,7 @@ $(document).ready -> moonshine ->
       type: 'event'
       start: moment(start).format()
       allDay: allDay
-      title: 'New Event'
+      title: ' '
 
     doc.end = moment(end).format() if end
 

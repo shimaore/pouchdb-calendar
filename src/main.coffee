@@ -216,4 +216,35 @@ $(document).ready -> moonshine ->
       eventClick: event_click
       select: select
 
-   console.log 'Started'
+    start_replication = (url) ->
+      if url isnt ''
+        remotedb = new PouchDB url
+        db.replicate.to url,
+          continuous: true
+          complete: (err) ->
+            logger err
+        db.replicate.from url,
+          continuous: true
+          complete: (err) ->
+            logger err
+
+    db.get 'replicate', (err,doc) ->
+      if doc?.url?
+        ($ '#replicate').find('.url').val doc.url
+        start_replication doc.url
+
+    ($ '#replicate').find('.url').change ->
+      url = $(this).val().trim()
+      db.get 'replicate', (err,doc) ->
+        if doc?
+          doc.url = url
+          db.put doc
+        else
+          doc =
+            _id: 'replicate'
+            url: url
+          db.put doc
+
+        start_replication url
+
+    console.log 'Started'

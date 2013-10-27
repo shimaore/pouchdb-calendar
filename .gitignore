@@ -2,3 +2,4 @@ bower_components/
 old/
 src/timezones.coffee
 node_modules/
+test/.db/

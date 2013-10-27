@@ -24346,7 +24346,7 @@ $(document).ready(function() {
     };
     return this.get({
       '': function() {
-        var day_click, on_change, pending_refresh, refresh, start_replication,
+        var day_click, on_change, pending_refresh, refresh, replication_status, start_replication,
           _this = this;
         day_click = function(date, allDay) {
           return calendar('gotoDate', date);
@@ -24384,7 +24384,11 @@ $(document).ready(function() {
           return pending_refresh = null;
         };
         on_change = function() {
+          replication_status('Running');
           return pending_refresh != null ? pending_refresh : pending_refresh = setTimeout(refresh, 500);
+        };
+        replication_status = function(t) {
+          return ($('.replication-status')).text(t);
         };
         start_replication = function(url) {
           var replicate_from, replicate_to;
@@ -24393,17 +24397,20 @@ $(document).ready(function() {
               return db.replicate.to(url, {
                 continuous: true
               }, function(err) {
+                replication_status('Failed, retrying in 10s...');
                 return setTimeout(replicate_to, 10000);
               });
             })();
-            return (replicate_from = function() {
+            (replicate_from = function() {
               return db.replicate.from(url, {
                 continuous: true,
                 onChange: on_change
               }, function(err) {
+                replication_status('Failed, retrying in 10s...');
                 return setTimeout(replicate_from, 10000);
               });
             })();
+            return replication_status('Started');
           }
         };
         db.get('replicate', function(err, doc) {

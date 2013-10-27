@@ -200,7 +200,7 @@ $(document).ready -> moonshine ->
   @get '': ->
 
     day_click = (date,allDay) =>
-      calendar 'changeView', 'agendaWeek'
+      # calendar 'changeView', 'agendaWeek'
       calendar 'gotoDate', date
 
     calendar
@@ -212,8 +212,16 @@ $(document).ready -> moonshine ->
       lazyFetching: true
       ignoreTimezone: false
 
+      header:
+        left: 'title'
+        center: 'agendaDay,agendaWeek,month'
+        right: 'prevYear,prev,today,next,nextYear'
       timeFormat: 'HH:mm'
+      allDayText: 'All Day'
       axisFormat: 'HH:mm'
+      firstHour: 6
+      firstDay: 1
+      weekNumbers: true
 
       events: load_events
       eventDrop: drop_event

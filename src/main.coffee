@@ -15,7 +15,7 @@ do ->
     if opts.async
       if typeof opts.success isnt 'function'
         return
-      opts.error ?= console.error
+      opts.error ?= logger
       opts.success zone_files[url]
       # opts.error(err) not used
     else
@@ -92,10 +92,9 @@ $(document).ready -> moonshine ->
       startkey: moment(start).add(-1,'week').toJSON()
       endkey: moment(end).add(1,'week').toJSON()
       include_docs: true
-    console.log query
     db.query 'calendar/locate', query, (err,response) ->
       if err
-        console.error err
+        logger err
         return
 
       # remove duplicate _ids
@@ -109,7 +108,7 @@ $(document).ready -> moonshine ->
   delta_save = (event,next) ->
     db.get event._id, (err,doc) ->
       if err
-        console.error err
+        logger err
         return next false
 
       doc.start = moment(event.start).format()
@@ -128,7 +127,7 @@ $(document).ready -> moonshine ->
   field_save = (field,event,next) ->
     db.get event._id, (err,doc) ->
       if err
-        console.error err
+        logger err
         return next false
 
       doc[field] = event[field]
@@ -183,7 +182,7 @@ $(document).ready -> moonshine ->
 
     db.post doc, (err,response) ->
       if err or not response.ok
-        console.log err
+        logger err
         calendar 'refetchEvents'
         return
       doc._id = response.id
@@ -272,4 +271,4 @@ $(document).ready -> moonshine ->
 
         start_replication url
 
-    console.log 'Started'
+    logger 'Started'

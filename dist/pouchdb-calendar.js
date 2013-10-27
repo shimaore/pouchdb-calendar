@@ -23064,6 +23064,618 @@ return jQuery;
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};!function(a){"object"==typeof exports?module.exports=a():"function"==typeof define&&define.amd?define(a):"undefined"!=typeof window?window.moonshine=a():"undefined"!=typeof global?global.moonshine=a():"undefined"!=typeof self&&(self.moonshine=a())}(function(){return function a(b,c,d){function e(g,h){if(!c[g]){if(!b[g]){var i="function"==typeof require&&require;if(!h&&i)return i(g,!0);if(f)return f(g,!0);throw new Error("Cannot find module '"+g+"'")}var j=c[g]={exports:{}};b[g][0].call(j.exports,function(a){var c=b[g][1][a];return e(c?c:a)},j,j.exports,a,b,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b){var c,d;d=function(a,b){var c,d;for(c in b)d=b[c],a[c]=d;return a},c={},c.compile=function(a){var b,c,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s;e="";for(l in a){if(k=a[l],f="",j={},i=k.mixins,k)for(delete k.mixins,s=[].concat(i),o=0,q=s.length;q>o;o++)h=s[o],d(k,h);for(g in k)if(n=k[g],"object"==typeof n){for(c=[],m=g.split(/\s*,\s*/),p=0,r=m.length;r>p;p++)b=m[p],c.push(""+l+" "+b);j[c.join(",")]=n}else g=g.replace(/[A-Z]/g,function(a){return"-"+a.toLowerCase()}),f+=" "+g+": "+n+";\n";f&&(e+=""+l+" {\n"+f+"}\n"),e+=this.compile(j)}return e},b.exports=c},{}],2:[function(a,b,c){var d,e,f,g,h,i,j,k,l=[].slice,m=[].indexOf||function(a){for(var b=0,c=this.length;c>b;b++)if(b in this&&this[b]===a)return b;return-1};({}).hasOwnProperty,f=c,f.version="0.3.21",f.doctypes={"default":"<!DOCTYPE html>",5:"<!DOCTYPE html>",xml:'<?xml version="1.0" encoding="utf-8" ?>',transitional:'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',strict:'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',frameset:'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">',1.1:'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">',basic:'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">',mobile:'<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">',ce:'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "ce-html-1.0-transitional.dtd">'},g="var __slice = Array.prototype.slice;\nvar __hasProp = Object.prototype.hasOwnProperty;\nvar __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };\nvar __extends = function(child, parent) {\n  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }\n  function ctor() { this.constructor = child; }\n  ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype;\n  return child; };\nvar __indexOf = Array.prototype.indexOf || function(item) {\n  for (var i = 0, l = this.length; i < l; i++) {\n    if (this[i] === item) return i;\n  } return -1; };".replace(/\n/g,""),i={regular:"a abbr address article aside audio b bdi bdo blockquote body button canvas caption cite code colgroup datalist dd del details dfn div dl dt em fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hgroup html i iframe ins kbd label legend li main map mark menu meter nav noscript object ol optgroup option output p pre progress q rp rt ruby s samp script section select small span strong style sub summary sup table tbody td textarea tfoot th thead time title tr u ul video",svg:"a altGlyph altGlyphDef altGlyphItem animate animateColor animateMotion animateTransform circle clipPath color-profile cursor defs desc ellipse feBlend feColorMatrix feComponentTransfer feComposite feConvolveMatrix feDiffuseLighting feDisplacementMap feDistantLight feFlood feFuncA feFuncB feFuncG feFuncR feGaussianBlur feImage feMerge feMergeNode feMorphology feOffset fePointLight feSpecularLighting feSpotLight feTile feTurbulence filter font font-face font-face-format font-face-name font-face-src font-face-uri foreignObject g glyph glyphRef hkern image line linearGradient marker mask metadata missing-glyph mpath path pattern polygon polyline radialGradient rect script set stop style svg symbol text textPath title tref tspan use view vkern","void":"area base br col command embed hr img input keygen link meta param source track wbr",xml:"urlset url loc lastmod changefreq priority",obsolete:"applet acronym bgsound dir frameset noframes isindex listing nextid noembed plaintext rb strike xmp big blink center font marquee multicol nobr spacer tt",obsolete_void:"basefont frame"},j=function(){var a,b,c,d,e,f,g,h,j;for(b=1<=arguments.length?l.call(arguments,0):[],d=[],e=0,g=b.length;g>e;e++)for(a=b[e],j=i[a].split(" "),f=0,h=j.length;h>f;f++)c=j[f],m.call(d,c)<0&&d.push(c);return d},f.tags=j("regular","obsolete","void","obsolete_void","svg","xml"),f.self_closing=j("void","obsolete_void"),k=function(a){var b,c,d,e,f,g,h,i,j,k,n;return null==a&&(a={}),null==(k=a.format)&&(a.format=!1),null==(n=a.autoescape)&&(a.autoescape=!1),j={buffer:[],esc:function(b){return a.autoescape?f(b):b.toString()},tabs:0,repeat:function(a,b){return Array(b+1).join(a)},indent:function(){return a.format?i(this.repeat("  ",this.tabs)):void 0},tag:function(b,c){var d,e,f,g;for(d=[b],f=0,g=c.length;g>f;f++)e=c[f],d.push(e);return h.apply(a,d)},render_idclass:function(a){var b,c,d,e,f,g,h,j,k,l;for(c=[],l=a.split("."),f=g=0,j=l.length;j>g;f=++g)d=l[f],""!==d&&(0===f&&0===d.indexOf("#")?e=d.slice(1):c.push(d));if(e&&i(' id="'+e+'"'),c.length>0){for(i(' class="'),h=0,k=c.length;k>h;h++)b=c[h],b!==c[0]&&i(" "),i(b);return i('"')}},render_attrs:function(a,b){var c,d,e;null==b&&(b=""),e=[];for(c in a)d=a[c],"boolean"==typeof d&&d&&(d=c),"function"==typeof d&&(d="("+d+").call(this);"),"object"!=typeof d||d instanceof Array?d||0===d||""===d?e.push(i(" "+(b+c)+'="'+this.esc(d)+'"')):e.push(void 0):e.push(this.render_attrs(d,b+c+"-"));return e},render_contents:function(b,c){var d;switch(null==c&&(c=!1),typeof b){case"string":case"number":case"boolean":return i(c?b:this.esc(b));case"function":return a.format&&i("\n"),this.tabs++,d=b.call(a),"string"==typeof d&&(this.indent(),i(c?d:this.esc(d)),a.format&&i("\n")),this.tabs--,this.indent()}},render_tag:function(b,c,d,e,f){return this.indent(),i("<"+b),c&&this.render_idclass(c),d&&this.render_attrs(d),e&&i(" "+e),m.call(this.self_closing,b)>=0?(i(" />"),a.format&&i("\n")):(i(">"),this.render_contents(f),i("</"+b+">"),a.format&&i("\n")),null}},h=function(){var a,b,c,d,e,f,g,h,i,k;for(h=arguments[0],b=2<=arguments.length?l.call(arguments,1):[],i=0,k=b.length;k>i;i++)switch(a=b[i],typeof a){case"function":d=a;break;case"object":c=a;break;case"number":case"boolean":d=a;break;case"string":1===b.length?d=a:a===b[0]?(e=a.charAt(0),"#"===e||"."===e?(f=a.substr(0,a.indexOf(" ")),g=a.substr(a.indexOf(" ")+1),""===f&&(f=g,g=void 0)):(g=a,""===g&&(g=void 0))):d=a}return j.render_tag(h,f,c,g,d)},b=function(a){var b,c;return c=[],b=j.buffer,j.buffer=c,a(),j.buffer=b,c.join("")},f=function(a){return a.toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")},e=function(b){return null==b&&(b="default"),i(j.doctypes[b]),a.format?i("\n"):void 0},i=function(a){return j.buffer.push(a.toString()),null},d=function(b){return i("<!--"+b+"-->"),a.format?i("\n"):void 0},c=function(a){switch(typeof a){case"function":return script(""+j.coffeescript_helpers+"("+a+").call(this);");case"string":return script({type:"text/coffeescript"},function(){return a});case"object":return a.type="text/coffeescript",script(a)}},g=function(b,c){return j.indent(),i("<!--[if "+b+"]>"),j.render_contents(c),i("<![endif]-->"),a.format?i("\n"):void 0},null},k=k.toString().replace(/function\s*\(.*\)\s*\{/,"").replace(/return null;\s*\}$/,""),k=g+k,f.compile=function(a,b){var c,d,i,j,l,m,n,o,p,q,r,s,t;if(null==b&&(b={}),"function"==typeof a?a=a.toString():"string"==typeof a&&null!=e&&(a=e.compile(a,{bare:!0}),a="function(){"+a+"}"),d="",b.hardcode){s=b.hardcode;for(i in s)n=s[i],d+="function"==typeof n?"var "+i+" = function(){return ("+n+").apply(data, arguments);};":"var "+i+" = "+JSON.stringify(n)+";"}if(b.optimize&&null!=h)return h.compile(a,d,b);for(l="",m=[],t=f.tags,o=0,q=t.length;q>o;o++)j=t[o],(a.indexOf(j)>-1||d.indexOf(j)>-1)&&m.push(j);for(l+="var "+m.join(",")+";",p=0,r=m.length;r>p;p++)j=m[p],l+=""+j+" = function(){return __cc.tag('"+j+"', arguments);};";return c=l+d+k,c+="__cc.doctypes = "+JSON.stringify(f.doctypes)+";",c+="__cc.coffeescript_helpers = "+JSON.stringify(g)+";",c+="__cc.self_closing = "+JSON.stringify(f.self_closing)+";",b.locals&&(c+="with(data.locals){"),c+="("+a+").call(data);",b.locals&&(c+="}"),c+="return __cc.buffer.join('');",new Function("data",c)},d={},f.render=function(a,b,c){var e,g,h,i;null==b&&(b={}),null==c&&(c={});for(e in c)h=c[e],b[e]=h;return null==(i=b.cache)&&(b.cache=!1),b.optimize&&!b.cache&&(b.optimize=!1),g=b.cache&&null!=d[a]?d[a]:b.cache?d[a]=f.compile(a,b):f.compile(a,b),g(b)}},{}],3:[function(a,b){var c,d,e;c=a("./ccss.coffee.md"),d=a("./coffeecup.js"),e=function(a){var b,e,f,g,h,i,j,k,l;return g={},l={},b={},b.helper=function(a){var b,c;for(b in a)c=a[b],g[b]=c},b.view=function(a){var b,c;if("string"==typeof a)return a;if("function"==typeof a)return d.render(a,{hardcode:g});for(b in a)c=a[b],console.log("name="+b+" code="+c+" .");l[b]=d.compile(c,{hardcode:g});console.log('Compiled');},b.css=function(a){var b,d;if("string"==typeof a)return a;if("function"==typeof a)return c.compile(a());for(b in a)d=a[b],l[b]="function"==typeof d?function(a){return c.compile(d.apply(a))}:function(){return d}},b.render=function(a,b){return l[a](b)},b.get=function(a){var b,c;for(b in a)c=a[b],j(b,c)},k=[],j=function(a,c){k.push({path:a,route:function(a,d){var f;return f={render:b.render,params:a,query:d,post:e,redirect:function(a){return window.location.hash="#"+a}},c.apply(f)}})},a.apply(b),e=function(a,b){var c,d,e,f,g,h,i;for(console.log("Routing to '"+a+"'"),g=0,h=k.length;h>g;g++){if(j=k[g],"string"==typeof j.path&&j.path===a)return j.route({},b);if(null!=j.path.exec&&(e=j.path.exec(a)))return j.route(e,b);if(null!=j.path.regex&&(f=j.path.regex.exec(a))){e={},i=j.path.map;for(c in i)d=i[c],e[c]=f[d];return j.route(e,b)}}},f=function(){var a,b,c;return a=null!=(b=null!=(c=window.location.hash)?c.replace(/^#/,""):void 0)?b:"",e(a,{})},null!=("undefined"!=typeof window&&null!==window?window.onhashchange:void 0)?window.onhashchange(f):(h=window.location.hash,i=function(){var a;return a=window.location.hash,a!==h&&f(),h=a},setInterval(i,250)),f(),b},"undefined"!=typeof window&&null!==window&&(window.moonshine=e),"undefined"!=typeof b&&null!==b&&(b.exports=e)},{"./ccss.coffee.md":1,"./coffeecup.js":2}]},{},[3])(3)});
 
 },{}],11:[function(require,module,exports){
+/**
+ * Wrapper for the package as a whole.
+ */
+
+module.exports = {
+	ColorHelper: require('./src/ColorHelper'),
+	ColorFactory: require('./src/ColorFactory')
+};
+
+},{"./src/ColorFactory":12,"./src/ColorHelper":13}],12:[function(require,module,exports){
+/*!
+ * ColorFactory
+ *
+ * Copyright (c) 2010-2012 Andrew J. Peterson / NDP Software.
+ * All Rights Reserved.
+ */
+(function () {
+
+	var ColorHelper, ColorFactory,
+		sixHexDigits = 0xffffff;
+
+	ColorFactory = {
+		primaryColors: function () {
+			return ['#ff0', '#ff0000', '#0000ff'];
+		},
+
+		primaryAndSecondaryColors: function () {
+			return ['#ff0', '#f90', '#f00', '#90f', '#00f', '#0f6'];
+		},
+
+		complementary: function (color) {
+			var hsl = ColorHelper.rgbToHSL(color);
+			hsl[0] = (hsl[0] + 180) % 360;
+			return [ColorHelper.hslToHexColor(hsl), color];
+		},
+
+		/**
+		 * Two adjacent colors on 12-part color wheel
+		 */
+		analogous: function (color, angle) {
+			if (!angle) angle = 30;
+			var hsl = ColorHelper.rgbToHSL(color);
+			hsl[0] = (hsl[0] + angle) % 360;
+			var color0 = ColorHelper.hslToHexColor(hsl);
+			color0 = ColorHelper.darken(color0, 8);
+			color0 = ColorHelper.saturate(color0, -6);
+			hsl = ColorHelper.rgbToHSL(color);
+			hsl[0] = (hsl[0] - angle + 360) % 360;
+			var color2 = ColorHelper.hslToHexColor(hsl);
+			return [color0, color, color2];
+		},
+
+		random: function () {
+			// even distribution within (0,0xffffff)
+			var c = Math.round((Math.random() + sixHexDigits) + (sixHexDigits + 1)).toString(16);
+			c = c.substr(c.length - 6, 6);
+			return '#' + c;
+		},
+
+		randomGray: function () {
+			return ColorFactory.random().saturate(-100);
+		},
+
+		randomHue: function (s, l) {
+			var h = Math.round(Math.random() * 256);
+			return ColorHelper.hslToHexColor(h, s, l);
+		},
+
+		interpolate: function (color1, colorN, steps) {
+			var hsl1 = ColorHelper.rgbToHSL(color1);
+			var hslN = ColorHelper.rgbToHSL(colorN);
+			var delta = [];
+			for (var d in hsl1) {
+				delta.push((hslN[d] - hsl1[d]) / (steps - 1));
+			}
+
+			var hsl = hsl1;
+			var colors = [];
+			for (var i = 0; i < steps; i++) {
+				colors.push(ColorHelper.hslToHexColor(hsl));
+				for (d in hsl) {
+					hsl[d] += delta[d];
+				}
+			}
+			return colors;
+		},
+
+		// http://www.personal.psu.edu/cab38/ColorSch/Schemes.html
+		/**
+		 * Qualitative schemes do not imply magnitude differences between legend classes,
+		 * and hues are used to create the primary visual differences between classes.
+		 * Qualitative schemes are best suited to representing nominal or categorical data.
+		 * @param refColor (optional)
+		 * @param count
+		 */
+		qualitative: function (refColor, count) {
+			if (count === undefined && typeof refColor === 'number') {
+				count = refColor;
+				refColor = 'black';
+			}
+			var hsl = ColorHelper.rgbToHSL(refColor);
+			hsl[1] = Math.max(60, hsl[1]);
+			hsl[2] = Math.max(40, hsl[2]);
+			hsl[2] = Math.min(70, hsl[2]);
+			var i, colors = [];
+			for (i = 0; i < count; i++) {
+				colors.push(ColorHelper.hslToHexColor(hsl));
+				hsl[0] += (360 / count);
+				hsl[0] %= 360;
+			}
+			return colors;
+		},
+
+		/**
+		 * Sequential schemes are suited to ordered data that progress from low to high.
+		 * Lightness steps dominate the look of these schemes, with light colors
+		 * for low data values to dark colors for high data values.
+		 * @param startColor
+		 * @param endColor (optional)
+		 * @param count
+		 */
+		sequential: function (startColor, endColor, count) {
+			var hsl = ColorHelper.rgbToHSL(startColor);
+			if (count === undefined) {
+				count = endColor;
+				var lightness = hsl[2] - 20 * count;
+				if (lightness < 0) lightness = 100 - hsl[2];
+				endColor = ColorHelper.hslToHexColor([hsl[0], hsl[1], lightness]);
+			}
+			return ColorFactory.interpolate(startColor, endColor, count);
+
+		},
+
+		binary: function (trueColor) {
+			return [trueColor, ColorHelper.lighten(ColorHelper.saturate(trueColor, 10), 25)];
+		},
+
+		/**
+		 * Diverging schemes put equal emphasis on mid-range critical values and
+		 * extremes at both ends of the data range.
+		 * The critical class or break in the middle of the legend is
+		 * emphasized with light colors and low and high extremes are
+		 * emphasized with dark colors that have contrasting hues.
+		 * @param startColor
+		 * @param count
+		 */
+		diverging: function () {
+			/* @todo */
+		}
+	};
+
+	// Expose: Server or browser
+	if (typeof module !== 'undefined' && module.exports) {
+		ColorHelper = require('./ColorHelper');
+		module.exports = ColorFactory;
+	} else {
+		ColorHelper = this.ColorHelper;
+		this.ColorFactory = ColorFactory;
+	}
+}());
+
+},{"./ColorHelper":13}],13:[function(require,module,exports){
+/*!
+ * ColorHelper
+ */
+(function () {
+
+	/* Local variables */
+
+	var ColorHelper,
+		toString = Object.prototype.toString,
+		hasOwn = Object.prototype.hasOwnProperty,
+		slice = Array.prototype.slice,
+		/**
+		 * Use a singleton cache of all color strings we see.
+		 * Each key points to a structure, which can have hex, rgb, etc. values in it.
+		 */
+		immutableCache = {},
+		colorsHTML4 = {
+			black: '#000000',
+			silver: '#c0c0c0',
+			gray: '#808080',
+			white: '#ffffff',
+			maroon: '#800000',
+			red: '#ff0000',
+			purple: '#800080',
+			fuchsia: '#ff00ff',
+			green: '#008000',
+			lime: '#00ff00',
+			olive: '#808000',
+			yellow: '#ffff00',
+			navy: '#000080',
+			blue: '#0000ff',
+			teal: '#008080',
+			aqua: '#00ffff'
+		},
+		colorsHTML5 = {
+			AliceBlue: '#F0F8FF',
+			AntiqueWhite: '#FAEBD7',
+			Aqua: '#00FFFF',
+			Aquamarine: '#7FFFD4',
+			Azure: '#F0FFFF',
+			Beige: '#F5F5DC',
+			Bisque: '#FFE4C4',
+			Black: '#000000',
+			BlanchedAlmond: '#FFEBCD',
+			Blue: '#0000FF',
+			BlueViolet: '#8A2BE2',
+			Brown: '#A52A2A',
+			BurlyWood: '#DEB887',
+			CadetBlue: '#5F9EA0',
+			Chartreuse: '#7FFF00',
+			Chocolate: '#D2691E',
+			Coral: '#FF7F50',
+			CornflowerBlue: '#6495ED',
+			Cornsilk: '#FFF8DC',
+			Crimson: '#DC143C',
+			Cyan: '#00FFFF',
+			DarkBlue: '#00008B',
+			DarkCyan: '#008B8B',
+			DarkGoldenRod: '#B8860B',
+			DarkGray: '#A9A9A9',
+			DarkGrey: '#A9A9A9',
+			DarkGreen: '#006400',
+			DarkKhaki: '#BDB76B',
+			DarkMagenta: '#8B008B',
+			DarkOliveGreen: '#556B2F',
+			Darkorange: '#FF8C00',
+			DarkOrchid: '#9932CC',
+			DarkRed: '#8B0000',
+			DarkSalmon: '#E9967A',
+			DarkSeaGreen: '#8FBC8F',
+			DarkSlateBlue: '#483D8B',
+			DarkSlateGray: '#2F4F4F',
+			DarkSlateGrey: '#2F4F4F',
+			DarkTurquoise: '#00CED1',
+			DarkViolet: '#9400D3',
+			DeepPink: '#FF1493',
+			DeepSkyBlue: '#00BFFF',
+			DimGray: '#696969',
+			DimGrey: '#696969',
+			DodgerBlue: '#1E90FF',
+			FireBrick: '#B22222',
+			FloralWhite: '#FFFAF0',
+			ForestGreen: '#228B22',
+			Fuchsia: '#FF00FF',
+			Gainsboro: '#DCDCDC',
+			GhostWhite: '#F8F8FF',
+			Gold: '#FFD700',
+			GoldenRod: '#DAA520',
+			Gray: '#808080',
+			Grey: '#808080',
+			Green: '#008000',
+			GreenYellow: '#ADFF2F',
+			HoneyDew: '#F0FFF0',
+			HotPink: '#FF69B4',
+			IndianRed: '#CD5C5C',
+			Indigo: '#4B0082',
+			Ivory: '#FFFFF0',
+			Khaki: '#F0E68C',
+			Lavender: '#E6E6FA',
+			LavenderBlush: '#FFF0F5',
+			LawnGreen: '#7CFC00',
+			LemonChiffon: '#FFFACD',
+			LightBlue: '#ADD8E6',
+			LightCoral: '#F08080',
+			LightCyan: '#E0FFFF',
+			LightGoldenRodYellow: '#FAFAD2',
+			LightGray: '#D3D3D3',
+			LightGrey: '#D3D3D3',
+			LightGreen: '#90EE90',
+			LightPink: '#FFB6C1',
+			LightSalmon: '#FFA07A',
+			LightSeaGreen: '#20B2AA',
+			LightSkyBlue: '#87CEFA',
+			LightSlateGray: '#778899',
+			LightSlateGrey: '#778899',
+			LightSteelBlue: '#B0C4DE',
+			LightYellow: '#FFFFE0',
+			Lime: '#00FF00',
+			LimeGreen: '#32CD32',
+			Linen: '#FAF0E6',
+			Magenta: '#FF00FF',
+			Maroon: '#800000',
+			MediumAquaMarine: '#66CDAA',
+			MediumBlue: '#0000CD',
+			MediumOrchid: '#BA55D3',
+			MediumPurple: '#9370D8',
+			MediumSeaGreen: '#3CB371',
+			MediumSlateBlue: '#7B68EE',
+			MediumSpringGreen: '#00FA9A',
+			MediumTurquoise: '#48D1CC',
+			MediumVioletRed: '#C71585',
+			MidnightBlue: '#191970',
+			MintCream: '#F5FFFA',
+			MistyRose: '#FFE4E1',
+			Moccasin: '#FFE4B5',
+			NavajoWhite: '#FFDEAD',
+			Navy: '#000080',
+			OldLace: '#FDF5E6',
+			Olive: '#808000',
+			OliveDrab: '#6B8E23',
+			Orange: '#FFA500',
+			OrangeRed: '#FF4500',
+			Orchid: '#DA70D6',
+			PaleGoldenRod: '#EEE8AA',
+			PaleGreen: '#98FB98',
+			PaleTurquoise: '#AFEEEE',
+			PaleVioletRed: '#D87093',
+			PapayaWhip: '#FFEFD5',
+			PeachPuff: '#FFDAB9',
+			Peru: '#CD853F',
+			Pink: '#FFC0CB',
+			Plum: '#DDA0DD',
+			PowderBlue: '#B0E0E6',
+			Purple: '#800080',
+			Red: '#FF0000',
+			RosyBrown: '#BC8F8F',
+			RoyalBlue: '#4169E1',
+			SaddleBrown: '#8B4513',
+			Salmon: '#FA8072',
+			SandyBrown: '#F4A460',
+			SeaGreen: '#2E8B57',
+			SeaShell: '#FFF5EE',
+			Sienna: '#A0522D',
+			Silver: '#C0C0C0',
+			SkyBlue: '#87CEEB',
+			SlateBlue: '#6A5ACD',
+			SlateGray: '#708090',
+			SlateGrey: '#708090',
+			Snow: '#FFFAFA',
+			SpringGreen: '#00FF7F',
+			SteelBlue: '#4682B4',
+			Tan: '#D2B48C',
+			Teal: '#008080',
+			Thistle: '#D8BFD8',
+			Tomato: '#FF6347',
+			Turquoise: '#40E0D0',
+			Violet: '#EE82EE',
+			Wheat: '#F5DEB3',
+			White: '#FFFFFF',
+			WhiteSmoke: '#F5F5F5',
+			Yellow: '#FFFF00',
+			YellowGreen: '#9ACD32'
+		},
+		// Map String.prototype methods to ColorHelper
+		strProtoMapping = {
+			toHexColor: 'strToHexColor',
+			toRGB: 'hexToRGB',
+			lighten: 'lighten',
+			saturate: 'saturate',
+			darken: 'darken',
+			toHSL: 'rgbToHSL'
+		},
+		// Keep track of which methods we added to String.prototype,
+		// so we can safely remove only the ones we added.
+		strProtoPollution = [];
+
+	/* Local functions */
+
+	function isArray(object) {
+		return typeof object === 'object' && toString.call(object) === '[object Array]';
+	}
+
+	/**
+	 * Can't be used inline in the for-loop, because of variable scope.
+	 * Otherwise all methods would be pointing to the method as put in
+	 * the variable that lives on until after the loop itself.
+	 */
+	function makeStrProtoFn(method) {
+		return function () {
+			// Convert `arguments` into an array (usually empty or has 1 parameter)
+			var args = slice.call(arguments, 0);
+			// Add the current string as the first argument
+			args.unshift(this);
+			return ColorHelper[method].apply(ColorHelper, args);
+		};
+	}
+
+	/**
+	 * Returns (or creates) the cached color structure
+	 */
+	function colorCache(c) {
+		if (!immutableCache[c]) {
+			immutableCache[c] = {};
+		}
+		return immutableCache[c];
+	}
+
+	/* HSL helpers */
+
+	/** @return Array */
+	function hsl2rgb(h, s, l) {
+		// HSL 0 to 1 => RGB results from 0 to 255
+		var r, g, b, var_1, var_2;
+
+		if (s === 0) {
+			r = l * 255;
+			g = l * 255;
+			b = l * 255;
+		} else {
+			var_2 = (l < 0.5) ? l * (1 + s) : ((l + s) - (s * l));
+			var_1 = 2 * l - var_2;
+
+			r = 255 * h2rgb(var_1, var_2, h + (1 / 3));
+			g = 255 * h2rgb(var_1, var_2, h);
+			b = 255 * h2rgb(var_1, var_2, h - (1 / 3));
+		}
+
+		return [r, g, b];
+	}
+
+	function h2rgb(v1, v2, vH) {
+		if (vH < 0) {
+			vH += 1;
+		}
+
+		if (vH > 1) {
+			vH -= 1;
+		}
+
+		if ((6 * vH) < 1) {
+			return (v1 + (v2 - v1) * 6 * vH);
+		}
+
+		if ((2 * vH) < 1) {
+			return v2;
+		}
+
+		if ((3 * vH) < 2) {
+			return (v1 + (v2 - v1) * ((2 / 3) - vH) * 6);
+		}
+
+		return v1;
+	}
+
+	function hex2(n) {
+		var h = Math.round(n).toString(16);
+		if (h.length === 1) {
+			h = '0' + h;
+		}
+		return h.substr(0, 1) + h.substr(1, 1);
+	}
+
+	/**
+	 * @param Number h
+	 * @param Number s
+	 * @param Number l
+	 * - or -
+	 * @param Array hsl
+	 */
+	function hslToHexColor(hsl, s, l) {
+		var h, rgb;
+		if (isArray(hsl)) {
+			h = hsl[0] || 0;
+			s = hsl[1] || 0;
+			l = hsl[2] || 0;
+		} else {
+			h = hsl;
+		}
+
+		// HSL from 0 to 1
+		h = ((h + 360) % 360.0) / 360;
+		s = s / 100.0;
+		l = l / 100.0;
+
+		rgb = hsl2rgb(h, s, l);
+		return '#' + hex2(rgb[0]) + hex2(rgb[1]) + hex2(rgb[2]);
+	}
+
+	/* RGB helpers */
+
+	/**
+	 * [0..360, 0..100, 0.100]
+	 * http://www.easyrgb.com/index.php?X=MATH&H=18#text18
+	 */
+	function rgbToHsl(rgb) {
+		var r, g, b, max, min, d, h, s, l,
+			cache;
+
+		rgb = ColorHelper.hexToRGB(rgb);
+		r = rgb[0] / 255;
+		g = rgb[1] / 255;
+		b = rgb[2] / 255;
+		max = Math.max(r, g, b);
+		min = Math.min(r, g, b);
+
+		// Delta RGB value
+		d = max - min;
+		l = (max + min) / 2;
+
+		// gray?, no chroma...
+		if (d === 0) {
+			// HSl results from 0 to 1
+			h = 0;
+			s = 0;
+		} else {
+			// Chromatic data...
+			s = d / (l < 0.5 ? (max + min) : (2 - max - min));
+
+			var del_R = (((max - r) / 6) + (d / 2)) / d,
+				del_G = (((max - g) / 6) + (d / 2)) / d,
+				del_B = (((max - b) / 6) + (d / 2)) / d;
+
+			if (r === max) {
+				h = del_B - del_G;
+			} else if (g === max) {
+				h = (1 / 3) + del_R - del_B;
+			} else if (b === max) {
+				h = (2 / 3) + del_G - del_R;
+			}
+
+			if (h < 0) {
+				h += 1;
+			}
+			if (h > 0) {
+				h -= 1;
+			}
+		}
+
+		h = Math.round(h * 360);
+		if (h < 0) {
+			h += 360;
+		}
+
+		cache = colorCache(this);
+		cache.hsl = [h, Math.round(s * 100), Math.round(l * 100)];
+		return cache.hsl;
+	}
+
+	/* Public API */
+
+	ColorHelper = {
+		hslToHexColor: hslToHexColor,
+
+		rgbToHSL: function (s) {
+			var rgb = ColorHelper.strToHexColor(s);
+			return rgbToHsl(rgb);
+		},
+
+		strToHexColor: function (str) {
+			if (str.substr(0, 1) === '#' && str.length === 7) {
+				colorCache(str).hex = '' + str;
+			} else if (str.substr(0, 1) === '#' && str.length === 4) {
+				colorCache(str).hex = '#' + str.substr(1, 1) + str.substr(1, 1) +
+						str.substr(2, 1) + str.substr(2, 1) +
+						str.substr(3, 1) + str.substr(3, 1);
+			} else {
+				colorCache(str).hex = colorsHTML4[str] || colorsHTML5[str];
+			}
+			return colorCache(str).hex;
+		},
+
+		hexToRGB: function (hexStr) {
+			var cache = colorCache(hexStr);
+			if (cache.rgb) return cache.rgb;
+			var h = ColorHelper.strToHexColor(hexStr);
+			if (!h) throw 'Unknown color "' + hexStr + '"';
+			cache.rgb = [parseInt(h.substr(1, 2), 16), parseInt(h.substr(3, 2), 16), parseInt(h.substr(5, 2), 16)];
+			return cache.rgb;
+		},
+
+		lighten: function (color, percent) {
+			var hsl = ColorHelper.rgbToHSL(color);
+			var newHSL = [hsl[0], hsl[1], Math.min(100, hsl[2] + percent)];
+			return ColorHelper.hslToHexColor(newHSL);
+		},
+
+		darken: function (color, percent) {
+			var hsl = ColorHelper.rgbToHSL(color);
+			var newHSL = [hsl[0], hsl[1], Math.max(0, hsl[2] - percent)];
+			return ColorHelper.hslToHexColor(newHSL);
+		},
+
+		/**
+		 * Increase or decrease the saturation of a color.
+		 * @param percent positive values increase saturation, negative values desaturate.
+		 */
+		saturate: function (color, percent) {
+			var hsl = ColorHelper.rgbToHSL(color);
+			var newHSL = [hsl[0], Math.min(100, Math.max(0, hsl[1] + percent)), hsl[2]];
+			return ColorHelper.hslToHexColor(newHSL);
+		},
+
+		clobberPrototype: function () {
+			for (var key in strProtoMapping) {
+				// Only inject the method if there isn't something there
+				// already in its place.
+				if (!hasOwn.call(String.prototype, key)) {
+					strProtoPollution.push(key);
+					String.prototype[key] = makeStrProtoFn(strProtoMapping[key]);
+				}
+			}
+		},
+		restorePrototype: function () {
+			for (var i = 0, len = strProtoPollution.length; i < len; i += 1) {
+				delete String.prototype[strProtoPollution[i]];
+			}
+			// Empty the array
+			strProtoPollution.length = 0;
+		}
+	};
+
+	// Expose: Server or browser
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = ColorHelper;
+	} else {
+		this.ColorHelper = ColorHelper;
+	}
+}());
+
+},{}],14:[function(require,module,exports){
 // -----
 // The `timezoneJS.Date` object gives you full-blown timezone support, independent from the timezone set on the end-user's machine running the browser. It uses the Olson zoneinfo files for its timezone data.
 //
@@ -24073,8 +24685,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   };
 }).call(this);
 
-},{}],12:[function(require,module,exports){
-var $, db_url, fullcalendar, jQuery, jquery_ui_core, jquery_ui_draggable, jquery_ui_mouse, jquery_ui_resizable, jquery_ui_widget, logger, make_fun, moment, moonshine, pouchdb, timezoneJS, zone_files;
+},{}],15:[function(require,module,exports){
+var $, ColorFactory, db_url, fullcalendar, jQuery, jquery_ui_core, jquery_ui_draggable, jquery_ui_mouse, jquery_ui_resizable, jquery_ui_widget, logger, make_fun, moment, moonshine, pouchdb, timezoneJS, zone_files;
 
 db_url = "calendar";
 
@@ -24083,6 +24695,8 @@ logger = require('./tools.coffee').logger;
 timezoneJS = require('timezone-js');
 
 zone_files = require('./timezones.coffee');
+
+ColorFactory = require('node-colorfactory').ColorFactory;
 
 (function() {
   timezoneJS.timezone.zoneFileBasePath = 'tz';
@@ -24130,7 +24744,7 @@ make_fun = function(f) {
 
 $(document).ready(function() {
   return moonshine(function() {
-    var calendar, classes_for_event, db, delta_save, drop_event, event_click, field_save, load_events, remove_event, resize_event, select, show_loading;
+    var build_style, calendar, classes_for_event, db, delta_save, drop_event, event_click, field_save, load_events, new_class, preferences, remove_event, resize_event, save_preferences, select, show_loading;
     db = new PouchDB(db_url);
     db.get('_design/calendar', function(err, doc) {
       var p;
@@ -24263,12 +24877,77 @@ $(document).ready(function() {
         }
       });
     };
+    build_style = function(name, v) {
+      var style;
+      style = [];
+      if (v.bold) {
+        style.push("font-weight: bold;");
+      }
+      if (v.color) {
+        style.push("color: " + v.color + ";");
+      }
+      if (v.background) {
+        style.push("background-color: " + v.background + ";");
+      }
+      ($("style#calendar-" + name)).remove();
+      ($('<style>')).prop('id', "calendar-" + name).prop('type', 'text/css').html(".calendar-" + name + " { " + (style.join('')) + " }").appendTo('head');
+      return console.log("Built style for " + name);
+    };
+    preferences = {};
+    db.get('preferences', function(err, doc) {
+      var k, v, _ref, _results;
+      if (doc != null) {
+        preferences = doc;
+      } else {
+        preferences = {
+          _id: 'preferences',
+          classes: {}
+        };
+      }
+      if (preferences.classes != null) {
+        _ref = preferences.classes;
+        _results = [];
+        for (k in _ref) {
+          v = _ref[k];
+          _results.push(build_style(k, v));
+        }
+        return _results;
+      }
+    });
+    save_preferences = function(next) {
+      return db.get('preferences', function(err, doc) {
+        if ((doc != null ? doc._rev : void 0) != null) {
+          preferences._rev = doc._rev;
+        }
+        return db.put(preferences, function(err) {
+          if (err != null) {
+            logger(err);
+            return;
+          }
+          return typeof next === "function" ? next() : void 0;
+        });
+      });
+    };
+    new_class = function(name) {
+      if (preferences.classes[name] != null) {
+        return;
+      }
+      preferences.classes[name] = {
+        background: ColorFactory.randomHue(45, 42)
+      };
+      return save_preferences(function() {
+        return build_style(name, preferences.classes[name]);
+      });
+    };
     classes_for_event = function(event) {
       var classes, _ref;
       classes = (_ref = event.title) != null ? _ref.match(/#\w+/g) : void 0;
       if (classes != null) {
         return event.className = classes.map(function(t) {
-          return t.substr(1);
+          var name;
+          name = t.substr(1);
+          new_class(name);
+          return "calendar-" + name;
         });
       }
     };
@@ -24430,7 +25109,7 @@ $(document).ready(function() {
 });
 
 
-},{"../bower_components/fullcalendar/fullcalendar.js":1,"../bower_components/jquery-ui/ui/jquery.ui.core.js":2,"../bower_components/jquery-ui/ui/jquery.ui.draggable.js":3,"../bower_components/jquery-ui/ui/jquery.ui.mouse.js":4,"../bower_components/jquery-ui/ui/jquery.ui.resizable.js":5,"../bower_components/jquery-ui/ui/jquery.ui.widget.js":6,"./pouchdb-nightly":13,"./timezones.coffee":14,"./tools.coffee":15,"jquery-browserify":8,"moment":9,"moonshine-browserify":10,"timezone-js":11}],13:[function(require,module,exports){
+},{"../bower_components/fullcalendar/fullcalendar.js":1,"../bower_components/jquery-ui/ui/jquery.ui.core.js":2,"../bower_components/jquery-ui/ui/jquery.ui.draggable.js":3,"../bower_components/jquery-ui/ui/jquery.ui.mouse.js":4,"../bower_components/jquery-ui/ui/jquery.ui.resizable.js":5,"../bower_components/jquery-ui/ui/jquery.ui.widget.js":6,"./pouchdb-nightly":16,"./timezones.coffee":17,"./tools.coffee":18,"jquery-browserify":8,"moment":9,"moonshine-browserify":10,"node-colorfactory":11,"timezone-js":14}],16:[function(require,module,exports){
 var Buffer=require("__browserify_Buffer").Buffer;// pouchdb.nightly - 2013-10-05T13:53:08
 //
 // Edited (by removing anything that refers to "module" and "exports" so as to not confuse browserify)
@@ -30006,7 +30685,7 @@ Pouch.plugin('mapreduce', MapReduce);
 
  })(this);
 
-},{"__browserify_Buffer":7}],14:[function(require,module,exports){
+},{"__browserify_Buffer":7}],17:[function(require,module,exports){
 var rfile, zone_files;
 
 rfile = undefined /* removed rfile require */;
@@ -30052,7 +30731,7 @@ zone_files['systemv'] = "# <pre>\n# This file is in the public domain, so clarif
 zone_files['zone.tab'] = "# TZ zone descriptions\n#\n# This file is in the public domain, so clarified as of\n# 2009-05-17 by Arthur David Olson.\n#\n# From Paul Eggert (2013-08-14):\n#\n# This file contains a table where each row stands for an area that is\n# the intersection of a region identified by a country code and of a\n# zone where civil clocks have agreed since 1970.  The columns of the\n# table are as follows:\n#\n# 1.  ISO 3166 2-character country code.  See the file 'iso3166.tab'.\n# 2.  Latitude and longitude of the area's principal location\n#     in ISO 6709 sign-degrees-minutes-seconds format,\n#     either +-DDMM+-DDDMM or +-DDMMSS+-DDDMMSS,\n#     first latitude (+ is north), then longitude (+ is east).\n# 3.  Zone name used in value of TZ environment variable.\n#     Please see the 'Theory' file for how zone names are chosen.\n#     If multiple zones overlap a country, each has a row in the\n#     table, with column 1 being duplicated.\n# 4.  Comments; present if and only if the country has multiple rows.\n#\n# Columns are separated by a single tab.\n# The table is sorted first by country, then an order within the country that\n# (1) makes some geographical sense, and\n# (2) puts the most populous areas first, where that does not contradict (1).\n#\n# Lines beginning with '#' are comments.\n#\n# This table is intended as an aid for users, to help them select time\n# zone data appropriate for their practical needs.  It is not intended\n# to take or endorse any position on legal or territorial claims.\n#\n#country-\n#code\tcoordinates\tTZ\t\t\tcomments\nAD\t+4230+00131\tEurope/Andorra\nAE\t+2518+05518\tAsia/Dubai\nAF\t+3431+06912\tAsia/Kabul\nAG\t+1703-06148\tAmerica/Antigua\nAI\t+1812-06304\tAmerica/Anguilla\nAL\t+4120+01950\tEurope/Tirane\nAM\t+4011+04430\tAsia/Yerevan\nAO\t-0848+01314\tAfrica/Luanda\nAQ\t-7750+16636\tAntarctica/McMurdo\tMcMurdo, South Pole, Scott (New Zealand time)\nAQ\t-6734-06808\tAntarctica/Rothera\tRothera Station, Adelaide Island\nAQ\t-6448-06406\tAntarctica/Palmer\tPalmer Station, Anvers Island\nAQ\t-6736+06253\tAntarctica/Mawson\tMawson Station, Holme Bay\nAQ\t-6835+07758\tAntarctica/Davis\tDavis Station, Vestfold Hills\nAQ\t-6617+11031\tAntarctica/Casey\tCasey Station, Bailey Peninsula\nAQ\t-7824+10654\tAntarctica/Vostok\tVostok Station, Lake Vostok\nAQ\t-6640+14001\tAntarctica/DumontDUrville\tDumont-d'Urville Station, Terre Adelie\nAQ\t-690022+0393524\tAntarctica/Syowa\tSyowa Station, E Ongul I\nAR\t-3436-05827\tAmerica/Argentina/Buenos_Aires\tBuenos Aires (BA, CF)\nAR\t-3124-06411\tAmerica/Argentina/Cordoba\tmost locations (CB, CC, CN, ER, FM, MN, SE, SF)\nAR\t-2447-06525\tAmerica/Argentina/Salta\t(SA, LP, NQ, RN)\nAR\t-2411-06518\tAmerica/Argentina/Jujuy\tJujuy (JY)\nAR\t-2649-06513\tAmerica/Argentina/Tucuman\tTucuman (TM)\nAR\t-2828-06547\tAmerica/Argentina/Catamarca\tCatamarca (CT), Chubut (CH)\nAR\t-2926-06651\tAmerica/Argentina/La_Rioja\tLa Rioja (LR)\nAR\t-3132-06831\tAmerica/Argentina/San_Juan\tSan Juan (SJ)\nAR\t-3253-06849\tAmerica/Argentina/Mendoza\tMendoza (MZ)\nAR\t-3319-06621\tAmerica/Argentina/San_Luis\tSan Luis (SL)\nAR\t-5138-06913\tAmerica/Argentina/Rio_Gallegos\tSanta Cruz (SC)\nAR\t-5448-06818\tAmerica/Argentina/Ushuaia\tTierra del Fuego (TF)\nAS\t-1416-17042\tPacific/Pago_Pago\nAT\t+4813+01620\tEurope/Vienna\nAU\t-3133+15905\tAustralia/Lord_Howe\tLord Howe Island\nAU\t-5430+15857\tAntarctica/Macquarie\tMacquarie Island\nAU\t-4253+14719\tAustralia/Hobart\tTasmania - most locations\nAU\t-3956+14352\tAustralia/Currie\tTasmania - King Island\nAU\t-3749+14458\tAustralia/Melbourne\tVictoria\nAU\t-3352+15113\tAustralia/Sydney\tNew South Wales - most locations\nAU\t-3157+14127\tAustralia/Broken_Hill\tNew South Wales - Yancowinna\nAU\t-2728+15302\tAustralia/Brisbane\tQueensland - most locations\nAU\t-2016+14900\tAustralia/Lindeman\tQueensland - Holiday Islands\nAU\t-3455+13835\tAustralia/Adelaide\tSouth Australia\nAU\t-1228+13050\tAustralia/Darwin\tNorthern Territory\nAU\t-3157+11551\tAustralia/Perth\tWestern Australia - most locations\nAU\t-3143+12852\tAustralia/Eucla\tWestern Australia - Eucla area\nAW\t+1230-06958\tAmerica/Aruba\nAX\t+6006+01957\tEurope/Mariehamn\nAZ\t+4023+04951\tAsia/Baku\nBA\t+4352+01825\tEurope/Sarajevo\nBB\t+1306-05937\tAmerica/Barbados\nBD\t+2343+09025\tAsia/Dhaka\nBE\t+5050+00420\tEurope/Brussels\nBF\t+1222-00131\tAfrica/Ouagadougou\nBG\t+4241+02319\tEurope/Sofia\nBH\t+2623+05035\tAsia/Bahrain\nBI\t-0323+02922\tAfrica/Bujumbura\nBJ\t+0629+00237\tAfrica/Porto-Novo\nBL\t+1753-06251\tAmerica/St_Barthelemy\nBM\t+3217-06446\tAtlantic/Bermuda\nBN\t+0456+11455\tAsia/Brunei\nBO\t-1630-06809\tAmerica/La_Paz\nBQ\t+120903-0681636\tAmerica/Kralendijk\nBR\t-0351-03225\tAmerica/Noronha\tAtlantic islands\nBR\t-0127-04829\tAmerica/Belem\tAmapa, E Para\nBR\t-0343-03830\tAmerica/Fortaleza\tNE Brazil (MA, PI, CE, RN, PB)\nBR\t-0803-03454\tAmerica/Recife\tPernambuco\nBR\t-0712-04812\tAmerica/Araguaina\tTocantins\nBR\t-0940-03543\tAmerica/Maceio\tAlagoas, Sergipe\nBR\t-1259-03831\tAmerica/Bahia\tBahia\nBR\t-2332-04637\tAmerica/Sao_Paulo\tS & SE Brazil (GO, DF, MG, ES, RJ, SP, PR, SC, RS)\nBR\t-2027-05437\tAmerica/Campo_Grande\tMato Grosso do Sul\nBR\t-1535-05605\tAmerica/Cuiaba\tMato Grosso\nBR\t-0226-05452\tAmerica/Santarem\tW Para\nBR\t-0846-06354\tAmerica/Porto_Velho\tRondonia\nBR\t+0249-06040\tAmerica/Boa_Vista\tRoraima\nBR\t-0308-06001\tAmerica/Manaus\tE Amazonas\nBR\t-0640-06952\tAmerica/Eirunepe\tW Amazonas\nBR\t-0958-06748\tAmerica/Rio_Branco\tAcre\nBS\t+2505-07721\tAmerica/Nassau\nBT\t+2728+08939\tAsia/Thimphu\nBW\t-2439+02555\tAfrica/Gaborone\nBY\t+5354+02734\tEurope/Minsk\nBZ\t+1730-08812\tAmerica/Belize\nCA\t+4734-05243\tAmerica/St_Johns\tNewfoundland Time, including SE Labrador\nCA\t+4439-06336\tAmerica/Halifax\tAtlantic Time - Nova Scotia (most places), PEI\nCA\t+4612-05957\tAmerica/Glace_Bay\tAtlantic Time - Nova Scotia - places that did not observe DST 1966-1971\nCA\t+4606-06447\tAmerica/Moncton\tAtlantic Time - New Brunswick\nCA\t+5320-06025\tAmerica/Goose_Bay\tAtlantic Time - Labrador - most locations\nCA\t+5125-05707\tAmerica/Blanc-Sablon\tAtlantic Standard Time - Quebec - Lower North Shore\nCA\t+4339-07923\tAmerica/Toronto\tEastern Time - Ontario & Quebec - most locations\nCA\t+4901-08816\tAmerica/Nipigon\tEastern Time - Ontario & Quebec - places that did not observe DST 1967-1973\nCA\t+4823-08915\tAmerica/Thunder_Bay\tEastern Time - Thunder Bay, Ontario\nCA\t+6344-06828\tAmerica/Iqaluit\tEastern Time - east Nunavut - most locations\nCA\t+6608-06544\tAmerica/Pangnirtung\tEastern Time - Pangnirtung, Nunavut\nCA\t+744144-0944945\tAmerica/Resolute\tCentral Standard Time - Resolute, Nunavut\nCA\t+484531-0913718\tAmerica/Atikokan\tEastern Standard Time - Atikokan, Ontario and Southampton I, Nunavut\nCA\t+624900-0920459\tAmerica/Rankin_Inlet\tCentral Time - central Nunavut\nCA\t+4953-09709\tAmerica/Winnipeg\tCentral Time - Manitoba & west Ontario\nCA\t+4843-09434\tAmerica/Rainy_River\tCentral Time - Rainy River & Fort Frances, Ontario\nCA\t+5024-10439\tAmerica/Regina\tCentral Standard Time - Saskatchewan - most locations\nCA\t+5017-10750\tAmerica/Swift_Current\tCentral Standard Time - Saskatchewan - midwest\nCA\t+5333-11328\tAmerica/Edmonton\tMountain Time - Alberta, east British Columbia & west Saskatchewan\nCA\t+690650-1050310\tAmerica/Cambridge_Bay\tMountain Time - west Nunavut\nCA\t+6227-11421\tAmerica/Yellowknife\tMountain Time - central Northwest Territories\nCA\t+682059-1334300\tAmerica/Inuvik\tMountain Time - west Northwest Territories\nCA\t+4906-11631\tAmerica/Creston\tMountain Standard Time - Creston, British Columbia\nCA\t+5946-12014\tAmerica/Dawson_Creek\tMountain Standard Time - Dawson Creek & Fort Saint John, British Columbia\nCA\t+4916-12307\tAmerica/Vancouver\tPacific Time - west British Columbia\nCA\t+6043-13503\tAmerica/Whitehorse\tPacific Time - south Yukon\nCA\t+6404-13925\tAmerica/Dawson\tPacific Time - north Yukon\nCC\t-1210+09655\tIndian/Cocos\nCD\t-0418+01518\tAfrica/Kinshasa\twest Dem. Rep. of Congo\nCD\t-1140+02728\tAfrica/Lubumbashi\teast Dem. Rep. of Congo\nCF\t+0422+01835\tAfrica/Bangui\nCG\t-0416+01517\tAfrica/Brazzaville\nCH\t+4723+00832\tEurope/Zurich\nCI\t+0519-00402\tAfrica/Abidjan\nCK\t-2114-15946\tPacific/Rarotonga\nCL\t-3327-07040\tAmerica/Santiago\tmost locations\nCL\t-2709-10926\tPacific/Easter\tEaster Island & Sala y Gomez\nCM\t+0403+00942\tAfrica/Douala\nCN\t+3114+12128\tAsia/Shanghai\teast China - Beijing, Guangdong, Shanghai, etc.\nCN\t+4545+12641\tAsia/Harbin\tHeilongjiang (except Mohe), Jilin\nCN\t+2934+10635\tAsia/Chongqing\tcentral China - Sichuan, Yunnan, Guangxi, Shaanxi, Guizhou, etc.\nCN\t+4348+08735\tAsia/Urumqi\tmost of Tibet & Xinjiang\nCN\t+3929+07559\tAsia/Kashgar\twest Tibet & Xinjiang\nCO\t+0436-07405\tAmerica/Bogota\nCR\t+0956-08405\tAmerica/Costa_Rica\nCU\t+2308-08222\tAmerica/Havana\nCV\t+1455-02331\tAtlantic/Cape_Verde\nCW\t+1211-06900\tAmerica/Curacao\nCX\t-1025+10543\tIndian/Christmas\nCY\t+3510+03322\tAsia/Nicosia\nCZ\t+5005+01426\tEurope/Prague\nDE\t+5230+01322\tEurope/Berlin\tmost locations\nDE\t+4742+00841\tEurope/Busingen\tBusingen\nDJ\t+1136+04309\tAfrica/Djibouti\nDK\t+5540+01235\tEurope/Copenhagen\nDM\t+1518-06124\tAmerica/Dominica\nDO\t+1828-06954\tAmerica/Santo_Domingo\nDZ\t+3647+00303\tAfrica/Algiers\nEC\t-0210-07950\tAmerica/Guayaquil\tmainland\nEC\t-0054-08936\tPacific/Galapagos\tGalapagos Islands\nEE\t+5925+02445\tEurope/Tallinn\nEG\t+3003+03115\tAfrica/Cairo\nEH\t+2709-01312\tAfrica/El_Aaiun\nER\t+1520+03853\tAfrica/Asmara\nES\t+4024-00341\tEurope/Madrid\tmainland\nES\t+3553-00519\tAfrica/Ceuta\tCeuta & Melilla\nES\t+2806-01524\tAtlantic/Canary\tCanary Islands\nET\t+0902+03842\tAfrica/Addis_Ababa\nFI\t+6010+02458\tEurope/Helsinki\nFJ\t-1808+17825\tPacific/Fiji\nFK\t-5142-05751\tAtlantic/Stanley\nFM\t+0725+15147\tPacific/Chuuk\tChuuk (Truk) and Yap\nFM\t+0658+15813\tPacific/Pohnpei\tPohnpei (Ponape)\nFM\t+0519+16259\tPacific/Kosrae\tKosrae\nFO\t+6201-00646\tAtlantic/Faroe\nFR\t+4852+00220\tEurope/Paris\nGA\t+0023+00927\tAfrica/Libreville\nGB\t+513030-0000731\tEurope/London\nGD\t+1203-06145\tAmerica/Grenada\nGE\t+4143+04449\tAsia/Tbilisi\nGF\t+0456-05220\tAmerica/Cayenne\nGG\t+4927-00232\tEurope/Guernsey\nGH\t+0533-00013\tAfrica/Accra\nGI\t+3608-00521\tEurope/Gibraltar\nGL\t+6411-05144\tAmerica/Godthab\tmost locations\nGL\t+7646-01840\tAmerica/Danmarkshavn\teast coast, north of Scoresbysund\nGL\t+7029-02158\tAmerica/Scoresbysund\tScoresbysund / Ittoqqortoormiit\nGL\t+7634-06847\tAmerica/Thule\tThule / Pituffik\nGM\t+1328-01639\tAfrica/Banjul\nGN\t+0931-01343\tAfrica/Conakry\nGP\t+1614-06132\tAmerica/Guadeloupe\nGQ\t+0345+00847\tAfrica/Malabo\nGR\t+3758+02343\tEurope/Athens\nGS\t-5416-03632\tAtlantic/South_Georgia\nGT\t+1438-09031\tAmerica/Guatemala\nGU\t+1328+14445\tPacific/Guam\nGW\t+1151-01535\tAfrica/Bissau\nGY\t+0648-05810\tAmerica/Guyana\nHK\t+2217+11409\tAsia/Hong_Kong\nHN\t+1406-08713\tAmerica/Tegucigalpa\nHR\t+4548+01558\tEurope/Zagreb\nHT\t+1832-07220\tAmerica/Port-au-Prince\nHU\t+4730+01905\tEurope/Budapest\nID\t-0610+10648\tAsia/Jakarta\tJava & Sumatra\nID\t-0002+10920\tAsia/Pontianak\twest & central Borneo\nID\t-0507+11924\tAsia/Makassar\teast & south Borneo, Sulawesi (Celebes), Bali, Nusa Tengarra, west Timor\nID\t-0232+14042\tAsia/Jayapura\twest New Guinea (Irian Jaya) & Malukus (Moluccas)\nIE\t+5320-00615\tEurope/Dublin\nIL\t+314650+0351326\tAsia/Jerusalem\nIM\t+5409-00428\tEurope/Isle_of_Man\nIN\t+2232+08822\tAsia/Kolkata\nIO\t-0720+07225\tIndian/Chagos\nIQ\t+3321+04425\tAsia/Baghdad\nIR\t+3540+05126\tAsia/Tehran\nIS\t+6409-02151\tAtlantic/Reykjavik\nIT\t+4154+01229\tEurope/Rome\nJE\t+4912-00207\tEurope/Jersey\nJM\t+175805-0764736\tAmerica/Jamaica\nJO\t+3157+03556\tAsia/Amman\nJP\t+353916+1394441\tAsia/Tokyo\nKE\t-0117+03649\tAfrica/Nairobi\nKG\t+4254+07436\tAsia/Bishkek\nKH\t+1133+10455\tAsia/Phnom_Penh\nKI\t+0125+17300\tPacific/Tarawa\tGilbert Islands\nKI\t-0308-17105\tPacific/Enderbury\tPhoenix Islands\nKI\t+0152-15720\tPacific/Kiritimati\tLine Islands\nKM\t-1141+04316\tIndian/Comoro\nKN\t+1718-06243\tAmerica/St_Kitts\nKP\t+3901+12545\tAsia/Pyongyang\nKR\t+3733+12658\tAsia/Seoul\nKW\t+2920+04759\tAsia/Kuwait\nKY\t+1918-08123\tAmerica/Cayman\nKZ\t+4315+07657\tAsia/Almaty\tmost locations\nKZ\t+4448+06528\tAsia/Qyzylorda\tQyzylorda (Kyzylorda, Kzyl-Orda)\nKZ\t+5017+05710\tAsia/Aqtobe\tAqtobe (Aktobe)\nKZ\t+4431+05016\tAsia/Aqtau\tAtyrau (Atirau, Gur'yev), Mangghystau (Mankistau)\nKZ\t+5113+05121\tAsia/Oral\tWest Kazakhstan\nLA\t+1758+10236\tAsia/Vientiane\nLB\t+3353+03530\tAsia/Beirut\nLC\t+1401-06100\tAmerica/St_Lucia\nLI\t+4709+00931\tEurope/Vaduz\nLK\t+0656+07951\tAsia/Colombo\nLR\t+0618-01047\tAfrica/Monrovia\nLS\t-2928+02730\tAfrica/Maseru\nLT\t+5441+02519\tEurope/Vilnius\nLU\t+4936+00609\tEurope/Luxembourg\nLV\t+5657+02406\tEurope/Riga\nLY\t+3254+01311\tAfrica/Tripoli\nMA\t+3339-00735\tAfrica/Casablanca\nMC\t+4342+00723\tEurope/Monaco\nMD\t+4700+02850\tEurope/Chisinau\nME\t+4226+01916\tEurope/Podgorica\nMF\t+1804-06305\tAmerica/Marigot\nMG\t-1855+04731\tIndian/Antananarivo\nMH\t+0709+17112\tPacific/Majuro\tmost locations\nMH\t+0905+16720\tPacific/Kwajalein\tKwajalein\nMK\t+4159+02126\tEurope/Skopje\nML\t+1239-00800\tAfrica/Bamako\nMM\t+1647+09610\tAsia/Rangoon\nMN\t+4755+10653\tAsia/Ulaanbaatar\tmost locations\nMN\t+4801+09139\tAsia/Hovd\tBayan-Olgiy, Govi-Altai, Hovd, Uvs, Zavkhan\nMN\t+4804+11430\tAsia/Choibalsan\tDornod, Sukhbaatar\nMO\t+2214+11335\tAsia/Macau\nMP\t+1512+14545\tPacific/Saipan\nMQ\t+1436-06105\tAmerica/Martinique\nMR\t+1806-01557\tAfrica/Nouakchott\nMS\t+1643-06213\tAmerica/Montserrat\nMT\t+3554+01431\tEurope/Malta\nMU\t-2010+05730\tIndian/Mauritius\nMV\t+0410+07330\tIndian/Maldives\nMW\t-1547+03500\tAfrica/Blantyre\nMX\t+1924-09909\tAmerica/Mexico_City\tCentral Time - most locations\nMX\t+2105-08646\tAmerica/Cancun\tCentral Time - Quintana Roo\nMX\t+2058-08937\tAmerica/Merida\tCentral Time - Campeche, Yucatan\nMX\t+2540-10019\tAmerica/Monterrey\tMexican Central Time - Coahuila, Durango, Nuevo Leon, Tamaulipas away from US border\nMX\t+2550-09730\tAmerica/Matamoros\tUS Central Time - Coahuila, Durango, Nuevo Leon, Tamaulipas near US border\nMX\t+2313-10625\tAmerica/Mazatlan\tMountain Time - S Baja, Nayarit, Sinaloa\nMX\t+2838-10605\tAmerica/Chihuahua\tMexican Mountain Time - Chihuahua away from US border\nMX\t+2934-10425\tAmerica/Ojinaga\tUS Mountain Time - Chihuahua near US border\nMX\t+2904-11058\tAmerica/Hermosillo\tMountain Standard Time - Sonora\nMX\t+3232-11701\tAmerica/Tijuana\tUS Pacific Time - Baja California near US border\nMX\t+3018-11452\tAmerica/Santa_Isabel\tMexican Pacific Time - Baja California away from US border\nMX\t+2048-10515\tAmerica/Bahia_Banderas\tMexican Central Time - Bahia de Banderas\nMY\t+0310+10142\tAsia/Kuala_Lumpur\tpeninsular Malaysia\nMY\t+0133+11020\tAsia/Kuching\tSabah & Sarawak\nMZ\t-2558+03235\tAfrica/Maputo\nNA\t-2234+01706\tAfrica/Windhoek\nNC\t-2216+16627\tPacific/Noumea\nNE\t+1331+00207\tAfrica/Niamey\nNF\t-2903+16758\tPacific/Norfolk\nNG\t+0627+00324\tAfrica/Lagos\nNI\t+1209-08617\tAmerica/Managua\nNL\t+5222+00454\tEurope/Amsterdam\nNO\t+5955+01045\tEurope/Oslo\nNP\t+2743+08519\tAsia/Kathmandu\nNR\t-0031+16655\tPacific/Nauru\nNU\t-1901-16955\tPacific/Niue\nNZ\t-3652+17446\tPacific/Auckland\tmost locations\nNZ\t-4357-17633\tPacific/Chatham\tChatham Islands\nOM\t+2336+05835\tAsia/Muscat\nPA\t+0858-07932\tAmerica/Panama\nPE\t-1203-07703\tAmerica/Lima\nPF\t-1732-14934\tPacific/Tahiti\tSociety Islands\nPF\t-0900-13930\tPacific/Marquesas\tMarquesas Islands\nPF\t-2308-13457\tPacific/Gambier\tGambier Islands\nPG\t-0930+14710\tPacific/Port_Moresby\nPH\t+1435+12100\tAsia/Manila\nPK\t+2452+06703\tAsia/Karachi\nPL\t+5215+02100\tEurope/Warsaw\nPM\t+4703-05620\tAmerica/Miquelon\nPN\t-2504-13005\tPacific/Pitcairn\nPR\t+182806-0660622\tAmerica/Puerto_Rico\nPS\t+3130+03428\tAsia/Gaza\tGaza Strip\nPS\t+313200+0350542\tAsia/Hebron\tWest Bank\nPT\t+3843-00908\tEurope/Lisbon\tmainland\nPT\t+3238-01654\tAtlantic/Madeira\tMadeira Islands\nPT\t+3744-02540\tAtlantic/Azores\tAzores\nPW\t+0720+13429\tPacific/Palau\nPY\t-2516-05740\tAmerica/Asuncion\nQA\t+2517+05132\tAsia/Qatar\nRE\t-2052+05528\tIndian/Reunion\nRO\t+4426+02606\tEurope/Bucharest\nRS\t+4450+02030\tEurope/Belgrade\nRU\t+5443+02030\tEurope/Kaliningrad\tMoscow-01 - Kaliningrad\nRU\t+5545+03735\tEurope/Moscow\tMoscow+00 - west Russia\nRU\t+4844+04425\tEurope/Volgograd\tMoscow+00 - Caspian Sea\nRU\t+5312+05009\tEurope/Samara\tMoscow+00 - Samara, Udmurtia\nRU\t+5651+06036\tAsia/Yekaterinburg\tMoscow+02 - Urals\nRU\t+5500+07324\tAsia/Omsk\tMoscow+03 - west Siberia\nRU\t+5502+08255\tAsia/Novosibirsk\tMoscow+03 - Novosibirsk\nRU\t+5345+08707\tAsia/Novokuznetsk\tMoscow+03 - Novokuznetsk\nRU\t+5601+09250\tAsia/Krasnoyarsk\tMoscow+04 - Yenisei River\nRU\t+5216+10420\tAsia/Irkutsk\tMoscow+05 - Lake Baikal\nRU\t+6200+12940\tAsia/Yakutsk\tMoscow+06 - Lena River\nRU\t+623923+1353314\tAsia/Khandyga\tMoscow+06 - Tomponsky, Ust-Maysky\nRU\t+4310+13156\tAsia/Vladivostok\tMoscow+07 - Amur River\nRU\t+4658+14242\tAsia/Sakhalin\tMoscow+07 - Sakhalin Island\nRU\t+643337+1431336\tAsia/Ust-Nera\tMoscow+07 - Oymyakonsky\nRU\t+5934+15048\tAsia/Magadan\tMoscow+08 - Magadan\nRU\t+5301+15839\tAsia/Kamchatka\tMoscow+08 - Kamchatka\nRU\t+6445+17729\tAsia/Anadyr\tMoscow+08 - Bering Sea\nRW\t-0157+03004\tAfrica/Kigali\nSA\t+2438+04643\tAsia/Riyadh\nSB\t-0932+16012\tPacific/Guadalcanal\nSC\t-0440+05528\tIndian/Mahe\nSD\t+1536+03232\tAfrica/Khartoum\nSE\t+5920+01803\tEurope/Stockholm\nSG\t+0117+10351\tAsia/Singapore\nSH\t-1555-00542\tAtlantic/St_Helena\nSI\t+4603+01431\tEurope/Ljubljana\nSJ\t+7800+01600\tArctic/Longyearbyen\nSK\t+4809+01707\tEurope/Bratislava\nSL\t+0830-01315\tAfrica/Freetown\nSM\t+4355+01228\tEurope/San_Marino\nSN\t+1440-01726\tAfrica/Dakar\nSO\t+0204+04522\tAfrica/Mogadishu\nSR\t+0550-05510\tAmerica/Paramaribo\nSS\t+0451+03136\tAfrica/Juba\nST\t+0020+00644\tAfrica/Sao_Tome\nSV\t+1342-08912\tAmerica/El_Salvador\nSX\t+180305-0630250\tAmerica/Lower_Princes\nSY\t+3330+03618\tAsia/Damascus\nSZ\t-2618+03106\tAfrica/Mbabane\nTC\t+2128-07108\tAmerica/Grand_Turk\nTD\t+1207+01503\tAfrica/Ndjamena\nTF\t-492110+0701303\tIndian/Kerguelen\nTG\t+0608+00113\tAfrica/Lome\nTH\t+1345+10031\tAsia/Bangkok\nTJ\t+3835+06848\tAsia/Dushanbe\nTK\t-0922-17114\tPacific/Fakaofo\nTL\t-0833+12535\tAsia/Dili\nTM\t+3757+05823\tAsia/Ashgabat\nTN\t+3648+01011\tAfrica/Tunis\nTO\t-2110-17510\tPacific/Tongatapu\nTR\t+4101+02858\tEurope/Istanbul\nTT\t+1039-06131\tAmerica/Port_of_Spain\nTV\t-0831+17913\tPacific/Funafuti\nTW\t+2503+12130\tAsia/Taipei\nTZ\t-0648+03917\tAfrica/Dar_es_Salaam\nUA\t+5026+03031\tEurope/Kiev\tmost locations\nUA\t+4837+02218\tEurope/Uzhgorod\tRuthenia\nUA\t+4750+03510\tEurope/Zaporozhye\tZaporozh'ye, E Lugansk / Zaporizhia, E Luhansk\nUA\t+4457+03406\tEurope/Simferopol\tcentral Crimea\nUG\t+0019+03225\tAfrica/Kampala\nUM\t+1645-16931\tPacific/Johnston\tJohnston Atoll\nUM\t+2813-17722\tPacific/Midway\tMidway Islands\nUM\t+1917+16637\tPacific/Wake\tWake Island\nUS\t+404251-0740023\tAmerica/New_York\tEastern Time\nUS\t+421953-0830245\tAmerica/Detroit\tEastern Time - Michigan - most locations\nUS\t+381515-0854534\tAmerica/Kentucky/Louisville\tEastern Time - Kentucky - Louisville area\nUS\t+364947-0845057\tAmerica/Kentucky/Monticello\tEastern Time - Kentucky - Wayne County\nUS\t+394606-0860929\tAmerica/Indiana/Indianapolis\tEastern Time - Indiana - most locations\nUS\t+384038-0873143\tAmerica/Indiana/Vincennes\tEastern Time - Indiana - Daviess, Dubois, Knox & Martin Counties\nUS\t+410305-0863611\tAmerica/Indiana/Winamac\tEastern Time - Indiana - Pulaski County\nUS\t+382232-0862041\tAmerica/Indiana/Marengo\tEastern Time - Indiana - Crawford County\nUS\t+382931-0871643\tAmerica/Indiana/Petersburg\tEastern Time - Indiana - Pike County\nUS\t+384452-0850402\tAmerica/Indiana/Vevay\tEastern Time - Indiana - Switzerland County\nUS\t+415100-0873900\tAmerica/Chicago\tCentral Time\nUS\t+375711-0864541\tAmerica/Indiana/Tell_City\tCentral Time - Indiana - Perry County\nUS\t+411745-0863730\tAmerica/Indiana/Knox\tCentral Time - Indiana - Starke County\nUS\t+450628-0873651\tAmerica/Menominee\tCentral Time - Michigan - Dickinson, Gogebic, Iron & Menominee Counties\nUS\t+470659-1011757\tAmerica/North_Dakota/Center\tCentral Time - North Dakota - Oliver County\nUS\t+465042-1012439\tAmerica/North_Dakota/New_Salem\tCentral Time - North Dakota - Morton County (except Mandan area)\nUS\t+471551-1014640\tAmerica/North_Dakota/Beulah\tCentral Time - North Dakota - Mercer County\nUS\t+394421-1045903\tAmerica/Denver\tMountain Time\nUS\t+433649-1161209\tAmerica/Boise\tMountain Time - south Idaho & east Oregon\nUS\t+332654-1120424\tAmerica/Phoenix\tMountain Standard Time - Arizona (except Navajo)\nUS\t+340308-1181434\tAmerica/Los_Angeles\tPacific Time\nUS\t+611305-1495401\tAmerica/Anchorage\tAlaska Time\nUS\t+581807-1342511\tAmerica/Juneau\tAlaska Time - Alaska panhandle\nUS\t+571035-1351807\tAmerica/Sitka\tAlaska Time - southeast Alaska panhandle\nUS\t+593249-1394338\tAmerica/Yakutat\tAlaska Time - Alaska panhandle neck\nUS\t+643004-1652423\tAmerica/Nome\tAlaska Time - west Alaska\nUS\t+515248-1763929\tAmerica/Adak\tAleutian Islands\nUS\t+550737-1313435\tAmerica/Metlakatla\tMetlakatla Time - Annette Island\nUS\t+211825-1575130\tPacific/Honolulu\tHawaii\nUY\t-3453-05611\tAmerica/Montevideo\nUZ\t+3940+06648\tAsia/Samarkand\twest Uzbekistan\nUZ\t+4120+06918\tAsia/Tashkent\teast Uzbekistan\nVA\t+415408+0122711\tEurope/Vatican\nVC\t+1309-06114\tAmerica/St_Vincent\nVE\t+1030-06656\tAmerica/Caracas\nVG\t+1827-06437\tAmerica/Tortola\nVI\t+1821-06456\tAmerica/St_Thomas\nVN\t+1045+10640\tAsia/Ho_Chi_Minh\nVU\t-1740+16825\tPacific/Efate\nWF\t-1318-17610\tPacific/Wallis\nWS\t-1350-17144\tPacific/Apia\nYE\t+1245+04512\tAsia/Aden\nYT\t-1247+04514\tIndian/Mayotte\nZA\t-2615+02800\tAfrica/Johannesburg\nZM\t-1525+02817\tAfrica/Lusaka\nZW\t-1750+03103\tAfrica/Harare\n";
 
 
-},{}],15:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var $, jQuery;
 
 $ = jQuery = require('jquery-browserify');
@@ -30066,5 +30745,5 @@ this.logger = function(txt) {
 };
 
 
-},{"jquery-browserify":8}]},{},[12])
+},{"jquery-browserify":8}]},{},[15])
 ;

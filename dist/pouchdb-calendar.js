@@ -24094,7 +24094,7 @@ zone_files = require('./timezones.coffee');
         return;
       }
       if (opts.error == null) {
-        opts.error = console.error;
+        opts.error = logger;
       }
       return opts.success(zone_files[url]);
     } else {
@@ -24130,7 +24130,7 @@ make_fun = function(f) {
 
 $(document).ready(function() {
   return moonshine(function() {
-    var calendar, db, delta_save, drop_event, event_click, field_save, load_events, remove_event, resize_event, select, show_loading;
+    var calendar, classes_for_event, db, delta_save, drop_event, event_click, field_save, load_events, remove_event, resize_event, select, show_loading;
     db = new PouchDB(db_url);
     db.get('_design/calendar', function(err, doc) {
       var p;
@@ -24186,17 +24186,17 @@ $(document).ready(function() {
         endkey: moment(end).add(1, 'week').toJSON(),
         include_docs: true
       };
-      console.log(query);
       return db.query('calendar/locate', query, function(err, response) {
         var k, row, uniq, v, _i, _len, _name, _ref;
         if (err) {
-          console.error(err);
+          logger(err);
           return;
         }
         uniq = {};
         _ref = response.rows;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           row = _ref[_i];
+          classes_for_event(row.doc);
           if (uniq[_name = row.id] == null) {
             uniq[_name] = row.doc;
           }
@@ -24215,7 +24215,7 @@ $(document).ready(function() {
     delta_save = function(event, next) {
       return db.get(event._id, function(err, doc) {
         if (err) {
-          console.error(err);
+          logger(err);
           return next(false);
         }
         doc.start = moment(event.start).format();
@@ -24236,11 +24236,19 @@ $(document).ready(function() {
     };
     field_save = function(field, event, next) {
       return db.get(event._id, function(err, doc) {
+        var f, _i, _len;
         if (err) {
-          console.error(err);
+          logger(err);
           return next(false);
         }
-        doc[field] = event[field];
+        if (typeof field === 'string') {
+          doc[field] = event[field];
+        } else {
+          for (_i = 0, _len = field.length; _i < _len; _i++) {
+            f = field[_i];
+            doc[f] = event[f];
+          }
+        }
         return db.put(doc, function(err, doc) {
           if (err || !doc.ok) {
             return next(false);
@@ -24268,6 +24276,15 @@ $(document).ready(function() {
         }
       });
     };
+    classes_for_event = function(event) {
+      var classes, _ref;
+      classes = (_ref = event.title) != null ? _ref.match(/#\w+/g) : void 0;
+      if (classes != null) {
+        return event.className = classes.map(function(t) {
+          return t.substr(1);
+        });
+      }
+    };
     calendar = function() {
       var _ref;
       return (_ref = $('#calendar')).fullCalendar.apply(_ref, arguments);
@@ -24287,6 +24304,7 @@ $(document).ready(function() {
           });
         } else {
           event.title = title;
+          classes_for_event(event);
           return field_save('title', event, function(ok) {
             if (ok) {
               return calendar('updateEvent', event);
@@ -24309,7 +24327,7 @@ $(document).ready(function() {
       return db.post(doc, function(err, response) {
         var event;
         if (err || !response.ok) {
-          console.log(err);
+          logger(err);
           calendar('refetchEvents');
           return;
         }
@@ -24331,7 +24349,6 @@ $(document).ready(function() {
         var day_click, on_change, pending_refresh, refresh, start_replication,
           _this = this;
         day_click = function(date, allDay) {
-          calendar('changeView', 'agendaWeek');
           return calendar('gotoDate', date);
         };
         calendar({
@@ -24342,8 +24359,17 @@ $(document).ready(function() {
           eventDurationEditable: true,
           lazyFetching: true,
           ignoreTimezone: false,
+          header: {
+            left: 'title',
+            center: 'agendaDay,agendaWeek,month',
+            right: 'prevYear,prev,today,next,nextYear'
+          },
           timeFormat: 'HH:mm',
+          allDayText: 'All Day',
           axisFormat: 'HH:mm',
+          firstHour: 6,
+          firstDay: 1,
+          weekNumbers: true,
           events: load_events,
           eventDrop: drop_event,
           eventResize: resize_event,
@@ -24361,22 +24387,23 @@ $(document).ready(function() {
           return pending_refresh != null ? pending_refresh : pending_refresh = setTimeout(refresh, 500);
         };
         start_replication = function(url) {
-          var remotedb;
+          var replicate_from, replicate_to;
           if (url !== '') {
-            remotedb = new PouchDB(url);
-            db.replicate.to(url, {
-              continuous: true,
-              complete: function(err) {
-                return logger(err);
-              }
-            });
-            return db.replicate.from(url, {
-              continuous: true,
-              complete: function(err) {
-                return logger(err);
-              },
-              onChange: on_change
-            });
+            (replicate_to = function() {
+              return db.replicate.to(url, {
+                continuous: true
+              }, function(err) {
+                return setTimeout(replicate_to, 10000);
+              });
+            })();
+            return (replicate_from = function() {
+              return db.replicate.from(url, {
+                continuous: true,
+                onChange: on_change
+              }, function(err) {
+                return setTimeout(replicate_from, 10000);
+              });
+            })();
           }
         };
         db.get('replicate', function(err, doc) {
@@ -24402,7 +24429,7 @@ $(document).ready(function() {
             return start_replication(url);
           });
         });
-        return console.log('Started');
+        return logger('Started');
       }
     });
   });

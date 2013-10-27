@@ -33,10 +33,9 @@ jquery_ui_mouse = require '../bower_components/jquery-ui/ui/jquery.ui.mouse.js'
 jquery_ui_draggable = require '../bower_components/jquery-ui/ui/jquery.ui.draggable.js'
 jquery_ui_resizable = require '../bower_components/jquery-ui/ui/jquery.ui.resizable.js'
 
-# moment = require '../bower_components/momentjs/moment.js'
 moment = require 'moment'
 # moment_format = 'YYYY-MM-DDTHH:mm:ssZ'
-#
+
 # Data inside the PouchDB records is stored as moment().format() data (i.e. ISO8601 with timezone).
 
 fullcalendar = require '../bower_components/fullcalendar/fullcalendar.js'
@@ -74,19 +73,7 @@ $(document).ready -> moonshine ->
     p._rev = doc._rev if doc?
     db.put p
 
-  ###
-  db.get 'blob', (err,doc) ->
-    p =
-      _id: 'blob'
-      id: 'blob' # parent id for fullCalendar
-      start: moment('2013-10-01T09:50-02:00').format()
-      end: moment('2013-10-01T10:50-02:00').format()
-      title: 'Blob adop'
-      allDay: false
-    p._rev = doc._rev if doc?
-    db.put p
-  ###
-
+  # Load events to be displayed on a calendar view.
   load_events = (start,end,next) ->
     query =
       startkey: moment(start).add(-1,'week').toJSON()
@@ -105,6 +92,7 @@ $(document).ready -> moonshine ->
       next (v for k,v of uniq)
       return
 
+  # Save the time components of an event object.
   delta_save = (event,next) ->
     db.get event._id, (err,doc) ->
       if err
@@ -124,6 +112,7 @@ $(document).ready -> moonshine ->
         else
           next true
 
+  # Save one or more fields of an event object.
   field_save = (field,event,next) ->
     db.get event._id, (err,doc) ->
       if err
@@ -142,18 +131,22 @@ $(document).ready -> moonshine ->
         else
           next true
 
+  # Remove an event from the database.
   remove_event = (event,next) ->
     event._deleted = true
     field_save '_deleted', event, next
 
+  # Handle an event being moved on the calendar.
   drop_event = (event,dayDelta,minuteDelta,allDay,revert) ->
     delta_save event, (ok) ->
       if not ok then revert()
 
+  # Handle the end of an event being modified on the calendar.
   resize_event = (event, dayDelta, minuteDelta, revert) ->
     delta_save event, (ok) ->
       if not ok then revert()
 
+  # Apply CSS classes to an event, based on hash-tags in its title.
   classes_for_event = (event) ->
     classes = event.title?.match /#\w+/g
     if classes?
@@ -161,6 +154,7 @@ $(document).ready -> moonshine ->
 
   calendar = -> ($ '#calendar').fullCalendar arguments...
 
+  # Handle click on an event.
   event_click = (event) ->
     $(this).html '<input />'
     $(this).find('input').val(event.title).focus().blur ->
@@ -175,6 +169,7 @@ $(document).ready -> moonshine ->
         field_save 'title', event, (ok) ->
           if ok then calendar 'updateEvent', event
 
+  # Handle event creation (via selection) on the calendar.
   select = (start,end,allDay) ->
     doc =
       type: 'event'
@@ -194,12 +189,14 @@ $(document).ready -> moonshine ->
       event = doc
       calendar 'addEventSource', [event]
 
+  # Show or hide the `loading` indicator.
   show_loading = (isLoading) ->
     if isLoading
       ($ '#loading').show()
     else
       ($ '#loading').hide()
 
+  # Default processing
   @get '': ->
 
     day_click = (date,allDay) =>
@@ -234,7 +231,7 @@ $(document).ready -> moonshine ->
       eventClick: event_click
       select: select
 
-    # Do not force a refresh on each event.
+    # Do not force a refresh on each replication change.
     pending_refresh = null
     refresh = ->
       calendar 'refetchEvents'
@@ -261,12 +258,13 @@ $(document).ready -> moonshine ->
 
         replication_status 'Started'
 
-
+    # Load the replication URL and start replicating (at startup).
     db.get 'replicate', (err,doc) ->
       if doc?.url?
         ($ '#replicate').find('.url').val doc.url
         start_replication doc.url
 
+    # If the replication URL is changed, save it and start replicating.
     ($ '#replicate').find('.url').change ->
       url = $(this).val().trim()
       db.get 'replicate', (err,doc) ->

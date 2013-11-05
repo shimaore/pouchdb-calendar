@@ -21,7 +21,7 @@ Build
 You will need Node.js; the build is otherwise self-contained (`npm` will install the tools required).
 
     git clone https://github.com/shimaore/pouchdb-calendar.git
-    npm install
+    cd pouchdb-calendar && npm install
 
 To test, run
 

@@ -26,3 +26,9 @@ You will need Node.js; the build is otherwise self-contained (`npm` will install
 To test, run
 
     www-browser pouchdb-calendar/test/index.html
+
+To test with a local CouchDB database, install CouchDB then run
+
+    (cd test && ./start-couchdb.sh) &
+
+The database will be created in `test/.db/`.

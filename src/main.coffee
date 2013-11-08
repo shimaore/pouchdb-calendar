@@ -273,8 +273,9 @@ $(document).ready -> moonshine ->
       firstHour: 6
       firstDay: 1
       weekNumbers: true
-      contentHeight: 600
+      contentHeight: 450
       defaultView: 'agendaWeek'
+      firstHour: 8
 
       events: load_events
       eventDrop: drop_event

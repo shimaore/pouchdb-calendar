@@ -94,6 +94,16 @@ $(document).ready -> moonshine ->
       next (v for k,v of uniq)
       return
 
+  # Update a document from an event time components.
+  update_delta = (doc,event) ->
+    doc.start = moment(event.start).format()
+    if event.end?
+      doc.end = moment(event.end).format()
+    else
+      delete doc.end
+    doc.allDay = event.allDay
+
+
   # Save the time components of an event object.
   delta_save = (event,next) ->
     db.get event._id, (err,doc) ->
@@ -101,15 +111,28 @@ $(document).ready -> moonshine ->
         logger err
         return next false
 
-      doc.start = moment(event.start).format()
-      if event.end?
-        doc.end = moment(event.end).format()
-      else
-        delete doc.end
-      doc.allDay = event.allDay
+      update_delta doc, event
 
       db.put doc, (err,doc) ->
         if err or not doc.ok
+          logger err
+          next false
+        else
+          next true
+
+  # Save the time components and the title of an event object.
+  delta_title_save = (event,next) ->
+    db.get event._id, (err,doc) ->
+      if err
+        logger err
+        return next false
+
+      update_delta doc, event
+      doc.title = event.title
+
+      db.put doc, (err,doc) ->
+        if err or not doc.ok
+          logger err
           next false
         else
           next true
@@ -129,6 +152,7 @@ $(document).ready -> moonshine ->
 
       db.put doc, (err,doc) ->
         if err or not doc.ok
+          logger err
           next false
         else
           next true
@@ -207,6 +231,10 @@ $(document).ready -> moonshine ->
 
   # Handle click on an event.
   event_click = (event) ->
+
+    update_event_if_ok = (ok) ->
+      if ok then calendar 'updateEvent', event
+
     $(this).html '<input />'
     $(this).find('input').val(event.title).focus().blur ->
       title = $(this).val().trim()
@@ -215,10 +243,39 @@ $(document).ready -> moonshine ->
           if ok then calendar 'removeEvents', (e) ->
             return e._id is event._id
       else
-        event.title = title
-        classes_for_event event
-        field_save 'title', event, (ok) ->
-          if ok then calendar 'updateEvent', event
+        if m = title.match /^(\d\d):(\d\d) *- *(\d\d):(\d\d) *(.*)$/
+          # Set start and end times
+          start_hour = parseInt m[1]
+          start_min = parseInt m[2]
+          end_hour = parseInt m[3]
+          end_min = parseInt m[4]
+          event.start = moment(event.start).hour(start_hour).minute(start_min).format()
+          event.end = moment(event.start).hour(end_hour).minute(end_min).format()
+          event.allDay = false
+          event.title = m[5]
+          delta_title_save event, update_event_if_ok
+        else if m = title.match /^(\d\d):(\d\d) *(.*)$/
+          start_hour = parseInt m[1]
+          start_min = parseInt m[2]
+          if event.end?
+            # Compute the delta
+            old_start = moment(event.start)
+            new_start = moment(old_start).hour(start_hour).minute(start_min)
+            delta = new_start.diff old_start
+            console.log "Delta is #{delta}"
+            event.start = new_start.format()
+            event.end = moment(event.end).add(delta).format()
+            event.allDay = false
+          else
+            # Set start time
+            event.start = moment(event.start).hour(m[1]).minute(m[2]).format()
+            event.allDay = false
+          event.title = m[3]
+          delta_title_save event, update_event_if_ok
+        else
+          event.title = title
+          classes_for_event event
+          field_save 'title', event, update_event_if_ok
 
   # Handle event creation (via selection) on the calendar.
   select = (start,end,allDay) ->

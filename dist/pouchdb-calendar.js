@@ -24744,7 +24744,7 @@ make_fun = function(f) {
 
 $(document).ready(function() {
   return moonshine(function() {
-    var build_style, calendar, classes_for_event, db, delta_save, drop_event, event_click, field_save, load_events, new_class, preferences, remove_event, resize_event, save_preferences, select, show_loading;
+    var build_style, calendar, classes_for_event, db, delta_save, delta_title_save, drop_event, event_click, field_save, load_events, new_class, preferences, remove_event, resize_event, save_preferences, select, show_loading, update_delta;
     db = new PouchDB(db_url);
     db.get('_design/calendar', function(err, doc) {
       var p;
@@ -24813,21 +24813,43 @@ $(document).ready(function() {
         })());
       });
     };
+    update_delta = function(doc, event) {
+      doc.start = moment(event.start).format();
+      if (event.end != null) {
+        doc.end = moment(event.end).format();
+      } else {
+        delete doc.end;
+      }
+      return doc.allDay = event.allDay;
+    };
     delta_save = function(event, next) {
       return db.get(event._id, function(err, doc) {
         if (err) {
           logger(err);
           return next(false);
         }
-        doc.start = moment(event.start).format();
-        if (event.end != null) {
-          doc.end = moment(event.end).format();
-        } else {
-          delete doc.end;
-        }
-        doc.allDay = event.allDay;
+        update_delta(doc, event);
         return db.put(doc, function(err, doc) {
           if (err || !doc.ok) {
+            logger(err);
+            return next(false);
+          } else {
+            return next(true);
+          }
+        });
+      });
+    };
+    delta_title_save = function(event, next) {
+      return db.get(event._id, function(err, doc) {
+        if (err) {
+          logger(err);
+          return next(false);
+        }
+        update_delta(doc, event);
+        doc.title = event.title;
+        return db.put(doc, function(err, doc) {
+          if (err || !doc.ok) {
+            logger(err);
             return next(false);
           } else {
             return next(true);
@@ -24852,6 +24874,7 @@ $(document).ready(function() {
         }
         return db.put(doc, function(err, doc) {
           if (err || !doc.ok) {
+            logger(err);
             return next(false);
           } else {
             return next(true);
@@ -24956,9 +24979,15 @@ $(document).ready(function() {
       return (_ref = $('#calendar')).fullCalendar.apply(_ref, arguments);
     };
     event_click = function(event) {
+      var update_event_if_ok;
+      update_event_if_ok = function(ok) {
+        if (ok) {
+          return calendar('updateEvent', event);
+        }
+      };
       $(this).html('<input />');
       return $(this).find('input').val(event.title).focus().blur(function() {
-        var title;
+        var delta, end_hour, end_min, m, new_start, old_start, start_hour, start_min, title;
         title = $(this).val().trim();
         if (title === '') {
           return remove_event(event, function(ok) {
@@ -24969,13 +24998,38 @@ $(document).ready(function() {
             }
           });
         } else {
-          event.title = title;
-          classes_for_event(event);
-          return field_save('title', event, function(ok) {
-            if (ok) {
-              return calendar('updateEvent', event);
+          if (m = title.match(/^(\d\d):(\d\d) *- *(\d\d):(\d\d) *(.*)$/)) {
+            start_hour = parseInt(m[1]);
+            start_min = parseInt(m[2]);
+            end_hour = parseInt(m[3]);
+            end_min = parseInt(m[4]);
+            event.start = moment(event.start).hour(start_hour).minute(start_min).format();
+            event.end = moment(event.start).hour(end_hour).minute(end_min).format();
+            event.allDay = false;
+            event.title = m[5];
+            return delta_title_save(event, update_event_if_ok);
+          } else if (m = title.match(/^(\d\d):(\d\d) *(.*)$/)) {
+            start_hour = parseInt(m[1]);
+            start_min = parseInt(m[2]);
+            if (event.end != null) {
+              old_start = moment(event.start);
+              new_start = moment(old_start).hour(start_hour).minute(start_min);
+              delta = new_start.diff(old_start);
+              console.log("Delta is " + delta);
+              event.start = new_start.format();
+              event.end = moment(event.end).add(delta).format();
+              event.allDay = false;
+            } else {
+              event.start = moment(event.start).hour(m[1]).minute(m[2]).format();
+              event.allDay = false;
             }
-          });
+            event.title = m[3];
+            return delta_title_save(event, update_event_if_ok);
+          } else {
+            event.title = title;
+            classes_for_event(event);
+            return field_save('title', event, update_event_if_ok);
+          }
         }
       });
     };

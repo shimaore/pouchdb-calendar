@@ -96,13 +96,11 @@ PeerPouch.valid = function() {
     return true;
 };
 
-
 PeerPouch._types = {
     presence: 'com.stemstorage.peerpouch.presence',
     signal: 'com.stemstorage.peerpouch.signal',
     share: 'com.stemstorage.peerpouch.share'
 }
-var _t = PeerPouch._types;         // local alias for brevitation…
 
 // Register for our scheme
 Pouch.adapter('webrtc', PeerPouch);
@@ -118,4 +116,8 @@ PeerPouch._init = function(opts, callback) {
 
     var handler = _init(opts);
     return PeerPouch(opts,handler,callback);
+}
+
+if(module && module.exports) {
+  module.exports = PeerPouch;
 }

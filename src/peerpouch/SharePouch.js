@@ -1,6 +1,8 @@
 var PeerConnectionHandler = require("./PeerConnectionHandler");
 var PeerPouch = require('./PeerPouch');
 
+var _t = PeerPouch._types;         // local alias for brevitation…
+
 var SharePouch = function (hub) {
     // NOTE: this plugin's methods are intended for use only on a **hub** database
 
@@ -162,3 +164,7 @@ var SharePouch = function (hub) {
 }
 
 SharePouch._delete = function () {}; // blindly called by Pouch.destroy
+
+if(module && module.exports) {
+  module.exports = SharePouch;
+}

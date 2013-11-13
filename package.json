@@ -35,6 +35,7 @@
     "moment-timezone": "0.0.3",
     "node-colorfactory": "~0.1.2",
     "coffeeify": "~0.5.2",
-    "decomponentify": "0.0.3"
+    "decomponentify": "0.0.3",
+    "pouchdb": "git+https://github.com/daleharvey/pouchdb.git"
   }
 }

@@ -27,7 +27,7 @@ do ->
 
 $ = jQuery = require 'jquery-browserify'
 moonshine = require 'moonshine-browserify'
-pouchdb = require './pouchdb-nightly'
+pouchdb = require 'pouchdb'
 
 jquery_ui_core = require '../bower_components/jquery-ui/ui/jquery.ui.core.js'
 jquery_ui_widget = require '../bower_components/jquery-ui/ui/jquery.ui.widget.js'

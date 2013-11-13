@@ -13,6 +13,7 @@ To remove an event, click on the event and remove all content; the event will be
 Events classes are created by using the `#name` hash-tag syntax. Each event classes is mapped to attributes such as color.
 
 To replicate your local (in-browser) calendar database, first create the destination database on your CouchDB server, then enter its URL in the `Remote CouchDB` box at the bottom of the page. Two-way synchronization will start and will restart automatically when you access the page again.
+Your CouchDB server needs to have CORS enabled.
 If you are using the `start-couchdb.sh` script in the `test` folder, use `http://127.0.0.1:25984/calendar` as the URL.
 
 Build

@@ -268,7 +268,7 @@ $(document).ready -> moonshine ->
             event.allDay = false
           else
             # Set start time
-            event.start = moment(event.start).hour(m[1]).minute(m[2]).format()
+            event.start = moment(event.start).hour(start_hour).minute(start_min).format()
             event.allDay = false
           event.title = m[3]
           delta_title_save event, update_event_if_ok

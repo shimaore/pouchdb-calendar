@@ -321,7 +321,7 @@ $(document).ready -> moonshine ->
       ignoreTimezone: false
 
       header:
-        left: 'title'
+        left: 'title basicDay,basicWeek'
         center: 'agendaDay,agendaWeek,month'
         right: 'prevYear,prev,today,next,nextYear'
       timeFormat: 'HH:mm'

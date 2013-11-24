@@ -30774,7 +30774,7 @@ $(document).ready(function() {
             }
           });
         } else {
-          if (m = title.match(/^(\d\d):(\d\d) *- *(\d\d):(\d\d) *(.*)$/)) {
+          if (m = title.match(/^(\d?\d):(\d\d) *- *(\d?\d):(\d\d) *(.*)$/)) {
             start_hour = parseInt(m[1]);
             start_min = parseInt(m[2]);
             end_hour = parseInt(m[3]);
@@ -30784,7 +30784,7 @@ $(document).ready(function() {
             event.allDay = false;
             event.title = m[5];
             return delta_title_save(event, update_event_if_ok);
-          } else if (m = title.match(/^(\d\d):(\d\d) *(.*)$/)) {
+          } else if (m = title.match(/^(\d?\d):(\d\d) *(.*)$/)) {
             start_hour = parseInt(m[1]);
             start_min = parseInt(m[2]);
             if (event.end != null) {
@@ -30796,7 +30796,7 @@ $(document).ready(function() {
               event.end = moment(event.end).add(delta).format();
               event.allDay = false;
             } else {
-              event.start = moment(event.start).hour(m[1]).minute(m[2]).format();
+              event.start = moment(event.start).hour(start_hour).minute(start_min).format();
               event.allDay = false;
             }
             event.title = m[3];
@@ -30856,7 +30856,7 @@ $(document).ready(function() {
           lazyFetching: true,
           ignoreTimezone: false,
           header: {
-            left: 'title',
+            left: 'title basicDay,basicWeek',
             center: 'agendaDay,agendaWeek,month',
             right: 'prevYear,prev,today,next,nextYear'
           },

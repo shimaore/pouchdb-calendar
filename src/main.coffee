@@ -243,7 +243,7 @@ $(document).ready -> moonshine ->
           if ok then calendar 'removeEvents', (e) ->
             return e._id is event._id
       else
-        if m = title.match /^(\d\d):(\d\d) *- *(\d\d):(\d\d) *(.*)$/
+        if m = title.match /^(\d?\d):(\d\d) *- *(\d?\d):(\d\d) *(.*)$/
           # Set start and end times
           start_hour = parseInt m[1]
           start_min = parseInt m[2]
@@ -254,7 +254,7 @@ $(document).ready -> moonshine ->
           event.allDay = false
           event.title = m[5]
           delta_title_save event, update_event_if_ok
-        else if m = title.match /^(\d\d):(\d\d) *(.*)$/
+        else if m = title.match /^(\d?\d):(\d\d) *(.*)$/
           start_hour = parseInt m[1]
           start_min = parseInt m[2]
           if event.end?
